@@ -30,7 +30,7 @@ npm run build
 - css：sass/page/name.scss
 - javascript：js/page/name.js
 
-![web-mobile-cli的目录结构](./img/1.jepg)
+![web-mobile-cli的目录结构](./img/1.jpeg)
 
 ### 2-1：html
 由于集合了[gulp-file-include](https://github.com/coderhaoxin/gulp-file-include)，可将公共的静态html抽离出来重复调用，可根据实际情况决定是否使用，如下简单用法
