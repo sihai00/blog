@@ -198,8 +198,8 @@ h1,h2,h3,h4,h5{
 #### 3-1-3：创建TodoList.js
 1. 在```src/js/page```中创建TodoList.js
 2. 在```this.state```中定义$list和arr。（把当前页面需要用到的状态或数据等保存在```this.state```中，以便调用）
-  1. $list获取上述html中的id为js-TodoList的dom元素
-  2. arr为渲染dom节点
+  - $list获取上述html中的id为js-TodoList的dom元素
+  - arr为渲染dom节点
 
 > ```document.addEventListener('DOMContentLoaded', function(){ ... })```的作用是HTML文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发（此时图片等资源文件并未加载），在这时触发js是最快的
 
@@ -231,8 +231,8 @@ document.addEventListener('DOMContentLoaded', function(){
 ```
 
 3. ```this.init```是初始化函数，它包含两个生命周期load和ready
-  1. load用于请求数据，渲染数据。所以在load函数的render函数用来把数据（this.state.arr）渲染成dom元素
-  2. ready用于添加dom的事件，例如点击事件等等
+  - load用于请求数据，渲染数据。所以在load函数的render函数用来把数据（this.state.arr）渲染成dom元素
+  - ready用于添加dom的事件，例如点击事件等等
 
 > 必须先渲染完dom元素后才能添加添加事件，所以使用es7的async方法，先让load函数执行完后再执行ready函数
 
