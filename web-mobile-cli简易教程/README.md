@@ -26,14 +26,14 @@ npm run build
 
 ## 二：一个页面构成
 一个传统的页面的构成 = html + js + css
-![页面构成](./img/2.png)
+![页面构成](img/2.png)
 
 所以web-mobile-cli的目录结构为（假如以name为页面名字），都一一对应
 - html：html/name.html
 - css：sass/page/name.scss
 - javascript：js/page/name.js
 
-![web-mobile-cli的目录结构](./img/1.jpeg)
+![web-mobile-cli的目录结构](img/1.jpeg)
 
 ### 2-1：html
 由于集合了[gulp-file-include](https://github.com/coderhaoxin/gulp-file-include)，可将公共的静态html抽离出来重复调用，可根据实际情况决定是否使用，如下简单用法
@@ -60,7 +60,7 @@ npm run build
 ### 2-2：sass
 main.scss为主入口，在此可定义全局css，通过sass语法@import将其他子页面的sass引入。那么打包后只生成一个main.css文件，减少请求
 
-![sass结构](./img/3.png)
+![sass结构](img/3.png)
 
 ```scss
 /**
@@ -100,7 +100,7 @@ h1,h2,h3,h4,h5{
 ### 2-3：javascript
 面向对象的编程，每个子页面的js都继承至parent类，那么子页面的js可以调用父类parent里的属性和方法（es6语法，如果不熟请自行学习[阮一峰es6](http://es6.ruanyifeng.com/#docs/class)）
 
-![javascript结构](./img/4.png)
+![javascript结构](img/4.png)
 
 ```javascript
 // parent.js
@@ -118,7 +118,7 @@ class index extends parent{
 1. TodoList
 2. 网络请求
 
-![效果图](./img/5.jpg)
+![效果图](img/5.jpg)
 
 ### 3-1：TodoList
 编写TodoList

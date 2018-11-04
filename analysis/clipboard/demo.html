@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<p>点击复制后在右边textarea CTRL+V看一下</p>
+<input type="text" id="inputText" value="测试文本"/>
+<input type="button" id="btn" value="复制"/>
+<textarea rows="4"></textarea>
+<script type="text/javascript">
+  var btn = document.getElementById('btn');
+  btn.addEventListener('click', function(){
+    var inputText = document.getElementById('inputText');
+    var currentFocus = document.activeElement;
+    inputText.focus();
+    inputText.setSelectionRange(0, inputText.value.length);
+    document.execCommand('copy', true);
+    currentFocus.focus();
+  });
+</script>
+</body>
+</html>
