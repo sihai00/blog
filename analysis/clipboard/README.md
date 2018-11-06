@@ -1,4 +1,4 @@
-# clipboard.js源码解析
+# 复制功能库clipboard.js源码解析
 > [解析源码地址](https://github.com/sihai00/blog)
 
 ## 前言
@@ -584,7 +584,7 @@ function select(element) {
     return selectedText;
 }
 ```
-作者这里分三种情况，其实原理都是（想深入的话自行了解浏览器提供下面几个接口）
+作者这里分三种情况，其实原理为两步 （想深入的话自行了解浏览器提供下面几个方法）
 1. 选中元素（`element.select()`和`window.getSelection()`）
 2. 设置选中的范围（`element.setSelectionRange(start, end)`和`range.selectNodeContents(element)`）
 
@@ -678,7 +678,7 @@ class ClipboardAction {
     }
 }
 ```
-整个库最为核心的方法就是document.execCommand了，查看mdn文档
+整个库最为核心的方法就是document.execCommand了，查看MDN文档
 > 当一个HTML文档切换到设计模式 （designMode）时，document暴露 execCommand 方法，该方法允许运行命令来操纵可编辑区域的内容，大多数命令影响document的 selection（粗体，斜体等）
 
 1. 命令（copy / cut）
@@ -686,6 +686,174 @@ class ClipboardAction {
 3. 命令影响document的selection（当this.target不是input、textarea时实现我们选中的内容）
 
 最后，`handleResult`函数就是复制成功或者失败后的钩子函数，也即Clipboard所继承Emitter，当实例化ClipboardAction时就把Emitter作为this.emitter传递进来，这是复制的整个过程了，哈哈是不是感觉挺好读的。
+
+---
+
+原理是一样的，只要理解了this.target这条分路，我们回去initSelection函数，看看this.text这条路作者是怎么实现的
+```javascript
+class ClipboardAction {
+    /**
+     * @param {Object} options
+     */
+    constructor(options) {
+        // 定义属性
+        this.resolveOptions(options);
+
+        // 定义事件
+        this.initSelection();
+    }
+
+    /**
+     * 定义基础属性（从类Clipboard传递进来的）
+     * @param {Object} options
+     */
+    resolveOptions(options = {}) {
+      // 行为copy / cut
+      this.action    = options.action;
+      // 父元素
+      this.container = options.container;
+      // 钩子函数
+      this.emitter   = options.emitter;
+      // 复制目标
+      this.target    = options.target;
+      // 复制内容
+      this.text      = options.text;
+      // 绑定元素
+      this.trigger   = options.trigger;
+
+      // 复制内容
+      this.selectedText = '';
+    }
+
+    /**
+     * 使用哪一种策觉取决于提供的text和target
+     */
+    initSelection() {
+        if (this.text) {
+            this.selectFake();
+        }
+        else if (this.target) {
+            this.selectTarget();
+        }
+    }
+
+    /**
+     * 创建一个假的textarea元素（fakeElem），设置它的值为text属性的值并且选择它
+     */
+    selectFake() {
+        const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+
+        // 移除已经存在的上一次的fakeElem
+        this.removeFake();
+
+        this.fakeHandlerCallback = () => this.removeFake();
+        // 利用事件冒泡，当创建假元素并实现复制功能后，点击事件冒泡到其父元素，删除该假元素
+        this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+
+        this.fakeElem = document.createElement('textarea');
+        // Prevent zooming on iOS
+        this.fakeElem.style.fontSize = '12pt';
+        // Reset box model
+        this.fakeElem.style.border = '0';
+        this.fakeElem.style.padding = '0';
+        this.fakeElem.style.margin = '0';
+        // Move element out of screen horizontally
+        this.fakeElem.style.position = 'absolute';
+        this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
+        // Move element to the same position vertically
+        let yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        this.fakeElem.style.top = `${yPosition}px`;
+
+        this.fakeElem.setAttribute('readonly', '');
+        this.fakeElem.value = this.text;
+
+        // 添加到容器中
+        this.container.appendChild(this.fakeElem);
+
+        // 选中fakeElem
+        this.selectedText = select(this.fakeElem);
+        // 复制
+        this.copyText();
+    }
+
+    /**
+     * 在用户点击其他后再移除fakeElem。用户依然可以使用Ctrl+C去复制，因为fakeElem依然存在
+     */
+    removeFake() {
+        if (this.fakeHandler) {
+            this.container.removeEventListener('click', this.fakeHandlerCallback);
+            this.fakeHandler = null;
+            this.fakeHandlerCallback = null;
+        }
+
+        if (this.fakeElem) {
+            this.container.removeChild(this.fakeElem);
+            this.fakeElem = null;
+        }
+    }
+
+    /**
+     * 对目标执行复制操作
+     */
+    copyText() {
+        let succeeded;
+
+        try {
+            succeeded = document.execCommand(this.action);
+        }
+        catch (err) {
+            succeeded = false;
+        }
+
+        this.handleResult(succeeded);
+    }
+
+    /**
+     * 根据复制操作的结果触发对应发射器
+     * @param {Boolean} succeeded
+     */
+    handleResult(succeeded) {
+        this.emitter.emit(succeeded ? 'success' : 'error', {
+            action: this.action,
+            text: this.selectedText,
+            trigger: this.trigger,
+            clearSelection: this.clearSelection.bind(this)
+        });
+    }
+}
+```
+回顾下复制的流程，当只给了文本而没有元素时如何实现？我们可以自己模拟！作者构造了textarea元素，然后选中它即可，套路跟this.target一样。
+
+值得注意的是，作者巧妙的运用了事件冒泡机制。在`selectFake`函数中作者把移除textarea元素的事件绑定在this.container上。当我们点击trigger元素复制后，创建一个辅助的textarea元素实现复制，复制完之后点击事件冒泡到父级，父级绑定了移除textarea元素的事件，就顺势移除了。
 ## demo
+源码看了不练，跟白看有什么区别。接下来提炼最为核心原理写个demo，贼简单（MDN的例子）
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<p>点击复制后在右边textarea CTRL+V看一下</p>
+<input type="text" id="inputText" value="测试文本"/>
+<input type="button" id="btn" value="复制"/>
+<textarea rows="4"></textarea>
+<script type="text/javascript">
+  var btn = document.getElementById('btn');
+  btn.addEventListener('click', function(){
+    var inputText = document.getElementById('inputText');
+    
+    inputText.setSelectionRange(0, inputText.value.length);
+    document.execCommand('copy', true);
+  });
+</script>
+</body>
+</html>
+```
 
 ## 总结
+这是第一篇文章，有不足的地方多多提意见哈哈，相互交流，相互学习。

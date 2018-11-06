@@ -22,7 +22,7 @@ class ClipboardAction {
     resolveOptions(options = {}) {
       // 行为copy / cut
       this.action    = options.action;
-      // 包含元素
+      // 父元素
       this.container = options.container;
       // 钩子函数
       this.emitter   = options.emitter;

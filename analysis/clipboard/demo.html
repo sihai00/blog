@@ -16,11 +16,9 @@
   var btn = document.getElementById('btn');
   btn.addEventListener('click', function(){
     var inputText = document.getElementById('inputText');
-    var currentFocus = document.activeElement;
-    inputText.focus();
+
     inputText.setSelectionRange(0, inputText.value.length);
     document.execCommand('copy', true);
-    currentFocus.focus();
   });
 </script>
 </body>
