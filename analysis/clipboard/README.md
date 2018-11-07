@@ -1,5 +1,5 @@
-# 复制功能库clipboard.js源码解析
-> [解析源码地址](https://github.com/sihai00/blog)
+# 复制到剪切板插件clipboard.js源码解析
+> [clipboard.js](https://github.com/zenorocha/clipboard.js)是一个小型的复制到剪切板插件，只有3kb，非flash
 
 ## 前言
 公司项目有用到clipboard.js，由于好奇心顺手点开了源码看看其究竟是如何实现的，本以为是九曲十八弯错综复杂，其实还是挺容易看懂的，所以就分享下读后感哈哈。
@@ -7,7 +7,7 @@
 本篇读后感分为四部分，分别为前言、解构、demo、总结，四部分互不相连可根据需要分开看。
 
 前言和总结为吹水，解构为源码的解析，demo是抽离源码实现的核心实现的小demo，学以致用。
-> clipboard.js是一个小型的复制插件，只有3kb，非flash
+
 
 ## 使用
 在阅读源码之前最好先了解其用法，有助于理解某些诡异的源码为何这样写。

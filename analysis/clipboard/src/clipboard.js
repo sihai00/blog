@@ -1,7 +1,7 @@
 // 复制的核心代码
 import ClipboardAction from './clipboard-action';
 // 订阅者模式
-import Emitter from 'tiny-emitter';
+import Emitter from './tiny-emitter';
 // 对事件的封装
 import listen from 'good-listener';
 

@@ -1,4 +1,4 @@
-import select from 'select';
+import select from './select';
 
 /**
  * 内部类：使用text或者target属性执行复制或者剪切
