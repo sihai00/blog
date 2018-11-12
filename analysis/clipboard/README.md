@@ -1,21 +1,47 @@
 # 复制到剪切板插件clipboard.js源码解析
-> [clipboard.js](https://github.com/zenorocha/clipboard.js)是一个小型的复制到剪切板插件，只有3kb，非flash
+> [clipboard.js](https://github.com/zenorocha/clipboard.js) 是一个小型的复制到剪切板插件，只有3kb，非flash
 
 ## 前言
 公司项目有用到clipboard.js，由于好奇心顺手点开了源码看看其究竟是如何实现的，本以为是九曲十八弯错综复杂，其实还是挺容易看懂的，所以就分享下读后感哈哈。
 
-本篇读后感分为四部分，分别为前言、解构、demo、总结，四部分互不相连可根据需要分开看。
+本篇读后感分为四部分，分别为前言、解析、demo、总结，四部分互不相连可根据需要分开看。
 
-前言和总结为吹水，解构为源码的解析，demo是抽离源码实现的核心实现的小demo，学以致用。
+前言和总结为吹水，解析为源码的解析，demo是抽取源码的核心实现的小demo，学以致用。
 
+**建议跟着源码结合本文阅读，这样更加容易理解** 
 
 ## 使用
-在阅读源码之前最好先了解其用法，有助于理解某些诡异的源码为何这样写。
+在阅读源码之前最好先了解其用法，有助于理解某些诡异的源码为何这样写。（下面是clipboard.js作者的demo）
 
-拆解核心：**谁（trigger）** 对 **谁（target）** 做了**什么（copy）**
+```html
+<button class="btn">Copy</button>
+<div>hello</div>
 
-### 谁（trigger）-- new ClipboardJS的对象
-接收有三种方式
+<script>
+var clipboard = new ClipboardJS('.btn', {
+    target: function() {
+        return document.querySelector('div');
+    }
+});
+
+clipboard.on('success', function(e) {
+    console.log(e);
+});
+
+clipboard.on('error', function(e) {
+    console.log(e);
+});
+</script>
+```
+从作者给出的demo可以看到，点击btn后复制了div为hello的值，可以看成三步：
+1. 卡卡西（demo的btn）
+2. 复制（demo的ClipboardJS）
+3. 忍术（demo的div）
+
+即拆解核心：**trigger（卡卡西）** 对 **target（忍术）** 进行 **copy（复制）** 
+
+### trigger
+把trigger传递给`ClipboardJS`函数，函数接受三种类型
 1. dom元素
 2. nodeList
 3. 选择器
@@ -48,10 +74,10 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-### 谁（target）复制的值
-接收有两种方式
+### target
+target的目的是为了获取复制的值（text），所以target不一定是dom。获取text有两种方式
 1. trigger属性赋值
-2. target对象获取值
+2. target元素获取
 
 ```html
 <!-- 1.trigger属性赋值  data-clipboard-text -->
@@ -84,7 +110,7 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-### 做了什么（默认copy / cut）
+### copy（默认copy / cut）
 ```html
 <!-- 1.复制：默认copy -->
 <button class="btn">Copy</button>
@@ -107,16 +133,16 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-## 解构
-**建议跟着源码结合本文阅读，这样更加容易理解** 
-1. tiny-emitter.js：订阅者模式，相当于钩子，处理复制的回调函数
+## 解析
+源码主要包含两个核心文件clipboard.js和clipboard-action.js，但还需了解tiny-emitter.js。
+1. tiny-emitter.js：事件发射器，相当于钩子，处理复制的回调函数
 2. clipboard.js：处理复制所需的参数
 3. clipboard-action.js：复制的核心逻辑
 
 ### tiny-emitter.js
 > [tiny-emitter](https://github.com/scottcorgan/tiny-emitter) 是一个小型（小于1k）事件发射器（相当于node的events.EventEmitter）
 
-你肯定很奇怪为什么第一个解构的不是clipboard.js而是tiny-emitter.js，先看用法。
+你肯定很奇怪为什么第一个解析的不是clipboard.js而是tiny-emitter.js，先看用法。
 ```html
 <div id="btn" data-clipboard-text="1">
     <span>Copy</span>
@@ -136,7 +162,27 @@ clipboard.on('error', function(data) {
 });
 </script>
 ```
-clipboard.js中使用了tiny-emitter的on和emit方法。声明一个对象，用（success | error）定义标识，on方法用来添加该标识事件，emit方法用来标识发射事件。举例：你是一个古代的皇帝，在开朝之初就招了一批后宫佳丽（on方法），某天你想检查身体，就让公公向后宫传递一个信号（emit方法），就能雨露均沾了。
+
+既然定义了事件，源码在哪里触发事件触发器的呢？从他的标识（success | error）自然而然的想到，是复制这个操作之后才触发的。我们先来简单看看clipboard-action.js里的`emit`方法的代码，不影响后续的阅读
+```javascript
+class ClipboardAction{
+  /**
+   * 根据复制操作的结果触发对应发射器
+   * @param {Boolean} succeeded 复制操作后的返回值，用于判断复制是否成功
+   */
+  handleResult(succeeded) {
+      // 这里this.emitter.emit相当于E.emit
+      this.emitter.emit(succeeded ? 'success' : 'error', {
+          action: this.action,
+          text: this.selectedText,
+          trigger: this.trigger,
+          clearSelection: this.clearSelection.bind(this)
+      });
+  }
+}
+```
+
+clipboard.js中使用了tiny-emitter.js的`on`和`emit`方法。tiny-emitter.js声明一个对象（`this.e`），（success | error）定义标识，`on`方法用来添加该标识事件，emit方法用来标识发射事件。举例：你是一个古代的皇帝，在开朝之初就招了一批后宫佳丽（`on`方法），某天你想检查身体，就让公公向后宫传递一个信号（`emit`方法），就能雨露均沾了。
 
 ```javascript
 function E () {}
@@ -164,56 +210,29 @@ E.prototype = {
     });
 
     return this;
-  }
-};
-```
-既然定义了事件，在源码的哪里触发事件呢？从他的标识（success | error）自然而然的想到，是复制这个操作之后才触发的。我们先来简单看看clipboard-action.js里的emit方法的代码，不影响后续的阅读
-```javascript
-class ClipboardAction{
-  /**
-   * 根据复制操作的结果触发对应发射器
-   * @param {Boolean} succeeded 复制操作后的返回值，用于判断复制是否成功
-   */
-  handleResult(succeeded) {
-      // 这里this.emitter.emit相当于E.emit
-      this.emitter.emit(succeeded ? 'success' : 'error', {
-          action: this.action,
-          text: this.selectedText,
-          trigger: this.trigger,
-          clearSelection: this.clearSelection.bind(this)
-      });
-  }
-}
-```
-我们再来看看E.emit函数
-```javascript
-function E () {}
-/**
- * @param {String} name 触发事件的标识
- */
-E.prototype = {
+  },
   emit: function (name) {
-      // 获取标识后的参数，就是上面this.emitter.emit函数第二个参数对象{action, text, trigger, clearSelection}
-      // 最终从回调函数中获取data。E.on(success, (data) => data) 
-      var data = [].slice.call(arguments, 1);
-      
-      // 获取标识对应的函数
-      var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
-      var i = 0;
-      var len = evtArr.length;
-  
-      for (i; i < len; i++) {
-        // 循环触发函数数组的函数，把data传递出去作为on的回调函数的结果
-        evtArr[i].fn.apply(evtArr[i].ctx, data);
-      }
-  
-      return this;
-  }
+        // 获取标识后的参数，就是上面this.emitter.emit函数第二个参数对象{action, text, trigger, clearSelection}
+        // 最终从回调函数中获取data。E.on(success, (data) => data) 
+        var data = [].slice.call(arguments, 1);
+        
+        // 获取标识对应的函数
+        var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
+        var i = 0;
+        var len = evtArr.length;
+    
+        for (i; i < len; i++) {
+          // 循环触发函数数组的函数，把data传递出去作为on的回调函数的结果
+          evtArr[i].fn.apply(evtArr[i].ctx, data);
+        }
+    
+        return this;
+    }
 };
 ```
-
+简单理解就是tiny-emitter.js内部维护了一个对象（`this.e`），`this.e`对象用记录一系列的属性（例如：success、error），属性是数组，当调用`on`方法往对应属性的数组添加触发函数，调用`emit`方法就触发对应属性的所有函数
 ### clipboard.js
-clipboard.js由clipboard.js和clipboard-action.js组成。clipboard.js主要负责对接收传递进来的参数，并组装成clipboard-action.js所需要的数据结构。clipboard-action.js就是复制的核心库，负责复制的实现，我们先来看看clipboard.js
+clipboard.js主要由clipboard.js和clipboard-action.js组成。clipboard.js主要负责对接收传递进来的参数，并组装成clipboard-action.js所需要的数据结构。clipboard-action.js就是复制的核心库，负责复制的实现，我们先来看看clipboard.js
 
 ```javascript
 import Emitter from 'tiny-emitter';
@@ -232,16 +251,16 @@ class Clipboard extends Emitter {
     }
 }
 ```
-首先看constructor构造函数，从上面源码可以看到，Clipboard继承自Emitter，Emitter就是tiny-emitter.js的方法。而Clipboard初始化时有两个步骤
+从上面源码可以看到，`Clipboard`继承自`Emitter`，`Emitter`就是tiny-emitter.js的方法。而`Clipboard`初始化时有两个步骤
 1. 格式化传递进来的参数
 2. 为目标元素添加点击事件，并进行复制操作
 
 ---
 
-我们先看resolveOptions函数（从这里开始要区分trigger元素和target对象，trigger元素是用来绑定click事件的元素，target对象是复制的对象。也就是上面拆解核心：**谁（trigger）** 对 **谁（target）** 做了**什么（copy）**）
+我们先看`resolveOptions`函数（注意区分trigger元素和target对象，trigger元素是用来绑定click事件的元素，target对象是复制的对象。也就是上面拆解核心：**trigger（卡卡西）** 对 **target（忍术）** 进行 **copy（复制）** ）
 ```javascript
 import Emitter from 'tiny-emitter';
-class Clipboard extends Emitter {
+    class Clipboard extends Emitter {
     /**
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
@@ -314,17 +333,17 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 ```
-极为清晰，从resolveOptions可以看到格式化了4个所需的参数。
-1. action事件的行为（复制copy、剪切cut）
-2. target复制的目标
-3. text复制的内容
-4. container包含元素（对于使用者不需要太关心这个，为实现复制功能暂时性的添加textarea作为辅助）
+极为清晰，从`resolveOptions`可以看到格式化了4个所需的参数。
+1. `action`事件的行为（复制copy、剪切cut）
+2. `target`复制的目标
+3. `text`复制的内容
+4. `container`包含元素（对于使用者不需要太关心这个，为实现复制功能暂时性的添加`textarea`作为辅助）
 
 格式化的套路是一致的，判断是否传递了相应的参数，传递了就使用，没有的话就从trigger元素中通过属性获取（data-clipboard-xxx）
 
 ---
 
-接下来看listenClick。当格式化所需参数后，就开始对trigger元素绑定点击事件，实现复制功能
+当格式化所需参数后，接下来看listenClick，对trigger元素绑定点击事件，实现复制功能
 ```javascript
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
@@ -376,6 +395,8 @@ class Clipboard extends Emitter {
     }
 }
 ```
+当格式化所需参数后，就可以调用clipboard-action.js，并把对应的参数传递下去，实现复制功能。猜想作者分两个文件来实现是为了以功能来区分模块，清晰明了不至于代码揉杂在一起过于杂乱无章
+
 ### clipboard-action.js
 ```javascript
 class ClipboardAction {
@@ -441,8 +462,8 @@ class ClipboardAction {
     }
 }
 ```
-我们先看constructor构造函数，作者的老套路，分两部执行。先定义属性值，然后执行。除了构造函数外，还需要注意一下class的get和set函数，因为它重新定义了某些变量或函数的执行方式。
-但从上面看到，作者重新定义了action和target，把this._action和this._target作为了载体，限制了取值范围而已，小case。
+我们先看`constructor`构造函数，作者的老套路，分两部执行。先定义属性值，然后执行。除了构造函数外，还需要注意一下`class`的`get`和`set`函数，因为它重新定义了某些变量或函数的执行方式。
+但从上面看到，作者重新定义了`action`和`target`，把`this._action`和`this._target`作为了载体，限制了取值范围而已，小case。
 
 ---
 
@@ -483,7 +504,9 @@ class ClipboardAction {
     }
 }
 ```
-把传递进来的值记录在this上方便存取，但这里为什么会多一个this.selectedText呢？这里要区分开text和selectedText。从使用那部分的内容看库的用法，this.text是用户传递进来需要复制的值，而当传递的是this.target而没有传递this.text时，这时候用户希望复制的值是这个目标元素的值。所以了解用法后这里的this.selectedText是最终需要复制的值，即this.text的值或者this.target的值
+把传递进来的值记录在`this`上方便存取，但这里为什么会多一个`this.selectedText`呢？
+
+这里要区分开`text`和`selectedText`。从文章开始使用上看库的用法，`this.text`是用户传递进来需要复制的值，而当传递`this.target`而没有传递`this.text`时，这时候用户希望复制的值是这个目标元素的值。所以了解用法后这里的`this.selectedText`是最终需要复制的值，即`this.text`的值或者`this.target`的值
 
 --- 
 
@@ -529,7 +552,7 @@ class ClipboardAction {
 2. 按住鼠标并且滑动，选中需要复制的值
 3. `ctrl + c` 或者 右键复制
 
-`selectTarget`函数就是实现这三个步骤。我们可以看到选中的操作交给了`select`函数
+`selectTarget`函数就是实现这三个步骤。我们可以看到选中的操作交给了`select`函数，下面看`select`函数。
 
 ```javascript
 function select(element) {
@@ -678,18 +701,18 @@ class ClipboardAction {
     }
 }
 ```
-整个库最为核心的方法就是document.execCommand了，查看MDN文档
-> 当一个HTML文档切换到设计模式 （designMode）时，document暴露 execCommand 方法，该方法允许运行命令来操纵可编辑区域的内容，大多数命令影响document的 selection（粗体，斜体等）
+整个库最为核心的方法就是`document.execCommand`了，查看MDN文档
+> 当一个`HTML`文档切换到设计模式 （designMode）时，`document`暴露 `execCommand` 方法，该方法允许运行命令来操纵可编辑区域的内容，大多数命令影响`document`的 `selection`（粗体，斜体等）
 
 1. 命令（copy / cut）
 2. 可编辑区域的内容（我们选中的内容，例如input、textarea）
-3. 命令影响document的selection（当this.target不是input、textarea时实现我们选中的内容）
+3. 命令影响`document`的`selection`（当`this.target`不是`input`、`textarea`时实现我们选中的内容）
 
-最后，`handleResult`函数就是复制成功或者失败后的钩子函数，也即Clipboard所继承Emitter，当实例化ClipboardAction时就把Emitter作为this.emitter传递进来，这是复制的整个过程了，哈哈是不是感觉挺好读的。
+最后，`handleResult`函数就是复制成功或者失败后的钩子函数，也即`Clipboard`所继承`Emitter`，当实例化`ClipboardAction`时就把`Emitter`作为`this.emitter`传递进来，这是复制的整个过程了，哈哈是不是感觉挺好读的。
 
 ---
 
-原理是一样的，只要理解了this.target这条分路，我们回去initSelection函数，看看this.text这条路作者是怎么实现的
+原理是一样的，只要理解了`this.target`这条分路，我们回去`initSelection`函数，看看`this.text`这条路作者是怎么实现的
 ```javascript
 class ClipboardAction {
     /**
@@ -822,9 +845,9 @@ class ClipboardAction {
     }
 }
 ```
-回顾下复制的流程，当只给了文本而没有元素时如何实现？我们可以自己模拟！作者构造了textarea元素，然后选中它即可，套路跟this.target一样。
+回顾下复制的流程，当只给了文本而没有元素时如何实现？我们可以自己模拟！作者构造了`textarea`元素，然后选中它即可，套路跟`this.target`一样。
 
-值得注意的是，作者巧妙的运用了事件冒泡机制。在`selectFake`函数中作者把移除textarea元素的事件绑定在this.container上。当我们点击trigger元素复制后，创建一个辅助的textarea元素实现复制，复制完之后点击事件冒泡到父级，父级绑定了移除textarea元素的事件，就顺势移除了。
+值得注意的是，作者巧妙的运用了事件冒泡机制。在`selectFake`函数中作者把移除`textarea`元素的事件绑定在`this.container`上。当我们点击`trigger`元素复制后，创建一个辅助的`textarea`元素实现复制，复制完之后点击事件冒泡到父级，父级绑定了移除`textarea`元素的事件，就顺势移除了。
 ## demo
 源码看了不练，跟白看有什么区别。接下来提炼最为核心原理写个demo，贼简单（MDN的例子）
 ```html
@@ -856,4 +879,4 @@ class ClipboardAction {
 ```
 
 ## 总结
-这是第一篇文章，有不足的地方多多提意见哈哈，相互交流，相互学习。
+这是第一篇文章，写文章真的挺耗时间的比起自己看，但好处是反复斟酌源码，细看到一些粗略看看不到的东西。有不足的地方多多提意见，会接受但不一定会改哈哈。还有哪些小而美的库推荐推荐，相互交流，相互学习，相互交易。
