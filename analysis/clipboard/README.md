@@ -8,7 +8,9 @@
 
 前言和总结为吹水，解析为源码的解析，demo是抽取源码的核心实现的小demo，学以致用。
 
-**建议跟着源码结合本文阅读，这样更加容易理解** 
+**建议跟着源码结合本文阅读，这样更加容易理解！** 
+1. [clipboard.js](https://github.com/zenorocha/clipboard.js)
+2. [clipboard.js解析的Github地址](https://github.com/sihai00/blog/tree/master/analysis/clipboard)
 
 ## 使用
 在阅读源码之前最好先了解其用法，有助于理解某些诡异的源码为何这样写。（下面是clipboard.js作者的demo）
@@ -880,3 +882,5 @@ class ClipboardAction {
 
 ## 总结
 这是第一篇文章，写文章真的挺耗时间的比起自己看，但好处是反复斟酌源码，细看到一些粗略看看不到的东西。有不足的地方多多提意见，会接受但不一定会改哈哈。还有哪些小而美的库推荐推荐，相互交流，相互学习，相互交易。
+
+![py](https://user-gold-cdn.xitu.io/2018/11/12/16708732db725395?w=600&h=798&f=jpeg&s=111709)
