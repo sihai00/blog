@@ -38,6 +38,7 @@ function getHistoryState() {
 function createBrowserHistory(props = {}) {
   invariant(canUseDOM, "Browser history needs a DOM");
 
+  // 浏览器的history
   const globalHistory = window.history;
   const canUseHistory = supportsHistory();
   const needsHashChangeListener = !supportsPopStateOnHashChange();
@@ -47,12 +48,14 @@ function createBrowserHistory(props = {}) {
     getUserConfirmation = getConfirmation,
     keyLength = 6
   } = props;
+  
+  // 处理basename（相对地址，例如：首页为index，假如设置了basename为/the/base，那么首页为/the/base/index）
   const basename = props.basename
     ? stripTrailingSlash(addLeadingSlash(props.basename))
     : "";
 
   /**
-   *  获取格式化的location
+   * 处理state参数和window.location
    * @param historyState
    * @returns {{hash, key, pathname, search, state}}
    */
@@ -71,9 +74,11 @@ function createBrowserHistory(props = {}) {
         basename +
         '".'
     );
-
+    
+    // 保证path是不包含basename的
     if (basename) path = stripBasename(path, basename);
-
+    
+    // 创建history.location对象
     return createLocation(path, state, key);
   }
 
@@ -342,16 +347,29 @@ function createBrowserHistory(props = {}) {
   }
 
   const history = {
+    //  window.history属性长度
     length: globalHistory.length,
+
+    // history 当前行为（包含PUSH-进入、POP-弹出、REPLACE-替换）
     action: "POP",
+
+    // location对象（与地址有关）
     location: initialLocation,
+
+    // 当前地址（包含pathname）
     createHref,
+
+    // 跳转的方法
     push,
     replace,
     go,
     goBack,
     goForward,
+
+    // 截取
     block,
+    
+    // 监听
     listen
   };
 

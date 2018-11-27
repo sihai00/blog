@@ -6,11 +6,13 @@ import { parsePath } from "./PathUtils";
 export function createLocation(path, state, key, currentLocation) {
   let location;
   if (typeof path === "string") {
-    // Two-arg form: push(path, state)
+    // 两个参数 例如: push(path, state)
+
+    // parsePath函数用于拆解地址 例如：parsePath('www.aa.com/aa?b=bb') => {pathname: 'www.aa.com/aa', search: '?b=bb', hash: ''}
     location = parsePath(path);
     location.state = state;
   } else {
-    // One-arg form: push(location)
+    // 一个参数 例如: push(location)
     location = { ...path };
 
     if (location.pathname === undefined) location.pathname = "";
