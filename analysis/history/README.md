@@ -159,21 +159,11 @@ window.location = {
 结论是history.location是window.location的儿砸！我们来研究研究作者是怎么处理的。`getDOMLocation`在`history`中会经常调用，理解好这个函数比较重要。
 
 ```javascript
-// createBrowserHistory.js
-function getHistoryState() {
-  try {
-    return window.history.state || {};
-  } catch (e) {
-    // IE 11 sometimes throws when accessing window.history.state
-    // See https://github.com/ReactTraining/history/pull/289
-    return {};
-  }
-}
 function createBrowserHistory(props = {}){
   // 处理basename（相对地址，例如：首页为index，假如设置了basename为/the/base，那么首页为/the/base/index）
-  const basename = props.basename
-    ? stripTrailingSlash(addLeadingSlash(props.basename))
-    : "";
+  const basename = props.basename ? stripTrailingSlash(addLeadingSlash(props.basename)) : "";
+  
+  const initialLocation = getDOMLocation(getHistoryState());
 
   // 处理state参数和window.location
   function getDOMLocation(historyState) {
@@ -187,9 +177,7 @@ function createBrowserHistory(props = {}){
 
     // 创建history.location对象
     return createLocation(path, state, key);
-  }
-  
-  const initialLocation = getDOMLocation(getHistoryState())
+  };
 
   const history = {
     // location对象（与地址有关）
@@ -199,10 +187,44 @@ function createBrowserHistory(props = {}){
 
   return history;
 }
+
+// createBrowserHistory.js
+function getHistoryState() {
+  try {
+    return window.history.state || {};
+  } catch (e) {
+    // IE 11 sometimes throws when accessing window.history.state
+    // See https://github.com/ReactTraining/history/pull/289
+    return {};
+  }
+}
 ```
 一般大型的项目中都会把一个功能拆分成至少两个函数，一个专门处理参数的函数和一个接收处理参数实现功能的函数。`getDOMLocation`函数主要处理`state`和`window.location`参数，返回自定义的`history.location`对象，主要构造`history.location`对象是`createLocation`函数。接下来我们看在`LocationUtils.js`文件中的`createLocation`函数
 
 ```javascript
+// LocationUtils.js
+import { parsePath } from "./PathUtils";
+
+export function createLocation(path, state, key, currentLocation) {
+  let location;
+  if (typeof path === "string") {
+    // 两个参数 例如: push(path, state)
+
+    // parsePath函数用于拆解地址 例如：parsePath('www.aa.com/aa?b=bb') => {pathname: 'www.aa.com/aa', search: '?b=bb', hash: ''}
+    location = parsePath(path);
+    location.state = state;
+  } else {
+    // 一个参数 例如: push(location)
+    location = { ...path };
+
+    location.state = state;
+  }
+
+  if (key) location.key = key;
+
+  return location;
+}
+
 // PathUtils.js
 export function parsePath(path) {
   let pathname = path || "/";
@@ -227,53 +249,18 @@ export function parsePath(path) {
     hash: hash === "#" ? "" : hash
   };
 }
-
-// LocationUtils.js
-export function createLocation(path, state, key, currentLocation) {
-  let location;
-  if (typeof path === "string") {
-    // 两个参数 例如: push(path, state)
-
-    // parsePath函数用于拆解地址 例如：parsePath('www.aa.com/aa?b=bb') => {pathname: 'www.aa.com/aa', search: '?b=bb', hash: ''}
-    location = parsePath(path);
-    location.state = state;
-  } else {
-    // 一个参数 例如: push(location)
-    location = { ...path };
-
-    location.state = state;
-  }
-
-  if (key) location.key = key;
-
-  return location;
-}
 ```
 `createLocation`根据传递进来的`path`或者`location`值，返回格式化好的`location`，就是上面打印的`history.location`。接下来看`createHref`函数
 
 #### 3.1.2 createHref
 `createHref`函数的作用是返回当前的地址
 ```javascript
-// PathUtils.js
-function createPath(location) {
-  const { pathname, search, hash } = location;
-
-  let path = pathname || "/";
-
-  if (search && search !== "?")
-    path += search.charAt(0) === "?" ? search : `?${search}`;
-
-  if (hash && hash !== "#") path += hash.charAt(0) === "#" ? hash : `#${hash}`;
-
-  return path;
-}
-
 // createBrowserHistory.js
+import {createPath} from "./PathUtils";
+
 function createBrowserHistory(props = {}){
   // 处理basename（相对地址，例如：首页为index，假如设置了basename为/the/base，那么首页为/the/base/index）
-  const basename = props.basename
-    ? stripTrailingSlash(addLeadingSlash(props.basename))
-    : "";
+  const basename = props.basename ? stripTrailingSlash(addLeadingSlash(props.basename)) : "";
 
   function createHref(location) {
     return basename + createPath(location);
@@ -287,14 +274,63 @@ function createBrowserHistory(props = {}){
 
   return history;
 }
+
+// PathUtils.js
+function createPath(location) {
+  const { pathname, search, hash } = location;
+
+  let path = pathname || "/";
+
+  if (search && search !== "?")
+    path += search.charAt(0) === "?" ? search : `?${search}`;
+
+  if (hash && hash !== "#") path += hash.charAt(0) === "#" ? hash : `#${hash}`;
+
+  return path;
+}
 ```
 
 当了解完`history`的属性和方法后，我们就开始按照第二章的使用方法去了解其内部方法的实现。
 
 #### 3.1.3 listener
-在第二章中的使用代码中，创建了`History`对象后使用了`h.listener`函数，该方法是用于监听路由的改变。
+在**第二章使用**代码中，创建了`History`对象后使用了`h.listener`函数。
+```javascript
+// index.html
+h.listen(function (location) {
+  console.log(location, 'lis-1')
+})
+```
+该方法是用于监听路由的改变
 
 ```javascript
+// createBrowserHistory.js
+import createTransitionManager from "./createTransitionManager";
+const transitionManager = createTransitionManager();
+
+function createBrowserHistory(props = {}){
+  function listen(listener) {
+    // 添加 监听函数 到 队列
+    const unlisten = transitionManager.appendListener(listener);
+
+    // 添加 地址栏改变 的监听
+    checkDOMListeners(1);
+
+    // 解除监听
+    return () => {
+      checkDOMListeners(-1);
+      unlisten();
+    };
+  }
+
+  const history = {
+    // 监听
+    listen
+    ...
+  };
+
+  return history;
+}
+
 // createTransitionManager.js
 function createTransitionManager() {
   // 函数队列
@@ -324,17 +360,30 @@ function createTransitionManager() {
     ...
   };
 }
+```
+`history.listen`的效果是当地址栏改变时，触发回调监听函数。所以这里有两步
+1. `transitionManager.appendListener(listener)`把回调的监听函数添加到队列里（使用队列说明可以添加无数的回调监听函数）
+2. `checkDOMListeners`监听地址栏的改变
 
+调用`h.listener`传递回调监听函数，`h.listener`同时把回调监听函数传递进去`createTransitionManager.js`中的`appendListener`函数，`appendListener`函数把回调监听函数添加到当前的函数队列`listeners`中，说明`history`可以绑定多个监听回调函数。
+
+> `createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
+
+这里感觉有值得借鉴的地方：
+1. 添加队列函数时，依赖于一个状态，额外加多一层函数判断来决定是否启用
+2. 调用监听函数`listen`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原（有趣）
+
+--- 
+
+接下来我们看看`checkDOMListeners`函数是如何监听地址栏改变的
+```javascript
 // createBrowserHistory.js
-import createTransitionManager from "./createTransitionManager";
-const transitionManager = createTransitionManager();
-
 function createBrowserHistory(props = {}){
   function listen(listener) {
-    // 添加监听函数到队列
+    // 添加 监听函数 到 队列
     const unlisten = transitionManager.appendListener(listener);
 
-    // 
+    // 添加 地址栏改变 的监听
     checkDOMListeners(1);
 
     // 解除监听
@@ -342,6 +391,48 @@ function createBrowserHistory(props = {}){
       checkDOMListeners(-1);
       unlisten();
     };
+  }
+
+  function checkDOMListeners(delta) {
+    listenerCount += delta;
+    
+    if (listenerCount === 1 && delta === 1) {
+      // 添加绑定，当地址栏改变的时候
+      window.addEventListener('popstate', handlePopState);
+    } else if (listenerCount === 0) {
+      //  解除绑定
+      window.removeEventListener('popstate', handlePopState);
+    }
+  }
+  
+  // getDOMLocation(event.state)在3.1.1已经了解过并且知道它的返回值了
+  function handlePopState(event) {
+    handlePop(getDOMLocation(event.state));
+  }
+  
+  let forceNextPop = false;
+  
+  function handlePop(location) {
+    if (forceNextPop) {
+      forceNextPop = false;
+      setState();
+    } else {
+      const action = "POP";
+
+      // 执行block函数
+      transitionManager.confirmTransitionTo(
+        location,
+        action,
+        getUserConfirmation,
+        ok => {
+          if (ok) {
+            setState({ action, location });
+          } else {
+            revertPop(location);
+          }
+        }
+      );
+    }
   }
 
   const history = {
@@ -353,12 +444,4 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-`createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
-
-调用`h.listener`传递监听回调函数，`h.listener`同时把监听回调函数传递进去`createTransitionManager.js`中的`appendListener`函数，`appendListener`函数把监听回调函数添加到当前的函数队列`listeners`中，说明`history`可以绑定多个监听回调函数。
-
-这里感觉有值得借鉴的地方：
-1. 添加队列函数时，依赖于一个状态，额外加多一层函数判断来决定是否启用
-2. 调用监听函数`listen`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原（有趣）
-
 ## 4.总结
