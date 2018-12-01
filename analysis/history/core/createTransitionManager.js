@@ -16,7 +16,7 @@ function createTransitionManager() {
   }
 
   /**
-   * 执行block函数
+   * 执行提示
    * @param location
    * @param action
    * @param getUserConfirmation 设置弹框
@@ -74,6 +74,7 @@ function createTransitionManager() {
     };
   }
 
+  // 执行监听函数
   function notifyListeners(...args) {
     listeners.forEach(listener => listener(...args));
   }
