@@ -179,8 +179,10 @@ function createBrowserHistory(props = {}) {
     );
 
     const action = "PUSH";
+    // 构造location
     const location = createLocation(path, state, createKey(), history.location);
 
+    // 执行block函数，弹出框
     transitionManager.confirmTransitionTo(
       location,
       action,
@@ -188,13 +190,16 @@ function createBrowserHistory(props = {}) {
       ok => {
         if (!ok) return;
 
+        // 获取当前路径名
         const href = createHref(location);
         const { key, state } = location;
 
         if (canUseHistory) {
+          // 添加历史条目
           globalHistory.pushState({ key, state }, null, href);
 
           if (forceRefresh) {
+            // 强制刷新
             window.location.href = href;
           } else {
             const prevIndex = allKeys.indexOf(history.location.key);
@@ -202,10 +207,11 @@ function createBrowserHistory(props = {}) {
               0,
               prevIndex === -1 ? 0 : prevIndex + 1
             );
-            console.log(history, 'history')
+
             nextKeys.push(location.key);
             allKeys = nextKeys;
 
+            // 更新history
             setState({ action, location });
           }
         } else {
@@ -232,8 +238,10 @@ function createBrowserHistory(props = {}) {
     );
 
     const action = "REPLACE";
+    // 获取当前路径名
     const location = createLocation(path, state, createKey(), history.location);
 
+    // 执行block函数，弹出框
     transitionManager.confirmTransitionTo(
       location,
       action,
@@ -288,7 +296,6 @@ function createBrowserHistory(props = {}) {
     if (listenerCount === 1 && delta === 1) {
       // 监听history
       window.addEventListener(PopStateEvent, handlePopState);
-      // console.log(needsHashChangeListener, 'needsHashChangeListener')
       if (needsHashChangeListener)
         window.addEventListener(HashChangeEvent, handleHashChange);
     } else if (listenerCount === 0) {

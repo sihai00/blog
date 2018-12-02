@@ -1,10 +1,10 @@
 # 复制到剪切板插件clipboard.js源码解析
 > [clipboard.js](https://github.com/zenorocha/clipboard.js) 是一个小型的复制到剪切板插件，只有3kb，非flash
 
-## 前言
+## 1.前言
 公司项目有用到clipboard.js，由于好奇心顺手点开了源码看看其究竟是如何实现的，本以为是九曲十八弯错综复杂，其实还是挺容易看懂的，所以就分享下读后感哈哈。
 
-本篇读后感分为四部分，分别为前言、解析、demo、总结，四部分互不相连可根据需要分开看。
+本篇读后感分为四部分，分别为前言、使用、解析、demo、总结，四部分互不相连可根据需要分开看。
 
 前言和总结为吹水，解析为源码的解析，demo是抽取源码的核心实现的小demo，学以致用。
 
@@ -12,7 +12,7 @@
 1. [clipboard.js](https://github.com/zenorocha/clipboard.js)
 2. [clipboard.js解析的Github地址](https://github.com/sihai00/blog/tree/master/analysis/clipboard)
 
-## 使用
+## 2.使用
 在阅读源码之前最好先了解其用法，有助于理解某些诡异的源码为何这样写。（下面是clipboard.js作者的demo）
 
 ```html
@@ -42,7 +42,7 @@ clipboard.on('error', function(e) {
 
 即拆解核心：**trigger（卡卡西）** 对 **target（忍术）** 进行 **copy（复制）** 
 
-### trigger
+### 2.1 trigger
 把trigger传递给`ClipboardJS`函数，函数接受三种类型
 1. dom元素
 2. nodeList
@@ -76,7 +76,7 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-### target
+### 2.2 target
 target的目的是为了获取复制的值（text），所以target不一定是dom。获取text有两种方式
 1. trigger属性赋值
 2. target元素获取
@@ -112,7 +112,7 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-### copy（默认copy / cut）
+### 2.3 copy（默认copy / cut）
 ```html
 <!-- 1.复制：默认copy -->
 <button class="btn">Copy</button>
@@ -135,13 +135,13 @@ var clipboard = new ClipboardJS('.btn');
 </script>
 ```
 
-## 解析
+## 3.解析
 源码主要包含两个核心文件clipboard.js和clipboard-action.js，但还需了解tiny-emitter.js。
 1. tiny-emitter.js：事件发射器，相当于钩子，处理复制的回调函数
 2. clipboard.js：处理复制所需的参数
 3. clipboard-action.js：复制的核心逻辑
 
-### tiny-emitter.js
+### 3.1 tiny-emitter.js
 > [tiny-emitter](https://github.com/scottcorgan/tiny-emitter) 是一个小型（小于1k）事件发射器（相当于node的events.EventEmitter）
 
 你肯定很奇怪为什么第一个解析的不是clipboard.js而是tiny-emitter.js，先看用法。
@@ -233,7 +233,7 @@ E.prototype = {
 };
 ```
 简单理解就是tiny-emitter.js内部维护了一个对象（`this.e`），`this.e`对象用记录一系列的属性（例如：success、error），属性是数组，当调用`on`方法往对应属性的数组添加触发函数，调用`emit`方法就触发对应属性的所有函数
-### clipboard.js
+### 3.2 clipboard.js
 clipboard.js主要由clipboard.js和clipboard-action.js组成。clipboard.js主要负责对接收传递进来的参数，并组装成clipboard-action.js所需要的数据结构。clipboard-action.js就是复制的核心库，负责复制的实现，我们先来看看clipboard.js
 
 ```javascript
@@ -399,7 +399,7 @@ class Clipboard extends Emitter {
 ```
 当格式化所需参数后，就可以调用clipboard-action.js，并把对应的参数传递下去，实现复制功能。猜想作者分两个文件来实现是为了以功能来区分模块，清晰明了不至于代码揉杂在一起过于杂乱无章
 
-### clipboard-action.js
+### 3.3 clipboard-action.js
 ```javascript
 class ClipboardAction {
     /**
@@ -850,7 +850,7 @@ class ClipboardAction {
 回顾下复制的流程，当只给了文本而没有元素时如何实现？我们可以自己模拟！作者构造了`textarea`元素，然后选中它即可，套路跟`this.target`一样。
 
 值得注意的是，作者巧妙的运用了事件冒泡机制。在`selectFake`函数中作者把移除`textarea`元素的事件绑定在`this.container`上。当我们点击`trigger`元素复制后，创建一个辅助的`textarea`元素实现复制，复制完之后点击事件冒泡到父级，父级绑定了移除`textarea`元素的事件，就顺势移除了。
-## demo
+## 4.demo
 源码看了不练，跟白看有什么区别。接下来提炼最为核心原理写个demo，贼简单（MDN的例子）
 ```html
 <!doctype html>
@@ -880,7 +880,7 @@ class ClipboardAction {
 </html>
 ```
 
-## 总结
+## 5.总结
 这是第一篇文章，写文章真的挺耗时间的比起自己看，但好处是反复斟酌源码，细看到一些粗略看看不到的东西。有不足的地方多多提意见，会接受但不一定会改哈哈。还有哪些小而美的库推荐推荐，相互交流，相互学习，相互交易。
 
 ![py](https://user-gold-cdn.xitu.io/2018/11/12/16708732db725395?w=600&h=798&f=jpeg&s=111709)

@@ -4,7 +4,7 @@
 ## 1.前言
 `history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如Node、React Native等）。
 
-本篇读后感分为四部分，分别为前言、解析、demo、总结，四部分互不相连可根据需要分开看。
+本篇读后感分为四部分，分别为前言、使用、解析、demo、总结，四部分互不相连可根据需要分开看。
 
 前言和总结为吹水，解析为源码的解析，demo是抽取源码的核心实现的小demo，学以致用。
 
@@ -18,7 +18,7 @@
 2. createHashHistory：传统浏览器（例如：/#/index）
 3. createMemoryHistory：没有Dom的环境（例如：Node、React Native）
 
-> 注意：本片文章只解析`createBrowserHistory`和`createHashHistory`两种，其实原理都是差不多的
+> 注意：本片文章只解析`createBrowserHistory`，其实原理都是差不多的
 
 ```html
 <!DOCTYPE html>
@@ -138,7 +138,7 @@ export default createBrowserHistory;
 5. push
 6. replace
 
-#### 3.1.1 location
+#### 3.2 location
 location属性存储了与地址栏有关的信息，我们对比下`createBrowserHistory`的返回值`history.location`和`window.location`
 
 ```javascript
@@ -267,7 +267,7 @@ export function parsePath(path) {
 ```
 `createLocation`根据传递进来的`path`或者`location`值，返回格式化好的`location`，代码简单。
 
-#### 3.1.2 createHref
+#### 3.3 createHref
 `createHref`函数的作用是返回当前路径名，例如地址`http://localhost:63342/history/index.html?a=1`，调用`h.createHref(location)`后返回`/history/index.html?a=1`
 
 ```javascript
@@ -305,7 +305,7 @@ function createPath(location) {
 }
 ```
 
-#### 3.1.3 listen
+#### 3.4 listen
 在这里我们可以想象下大概的 **监听** 流程
 1. 绑定我们设置的监听函数
 2. 监听历史记录条目的改变，触发监听函数
@@ -465,7 +465,7 @@ function createBrowserHistory(props = {}){
     Object.assign(history, nextState);
     history.length = globalHistory.length;
 
-    // 执行调监听函数listen
+    // 执行监听函数listen
     transitionManager.notifyListeners(history.location, history.action);
   }
 
@@ -484,7 +484,7 @@ function createBrowserHistory(props = {}){
 
 这就是`h.listen`的主要流程了，是不是还挺简单的
 
-#### 3.1.4 block
+#### 3.5 block
 
 `history.block`的功能是当历史记录条目改变时，触发提示信息。在这里我们可以想象下大概的 **截取** 流程
 1. 绑定我们设置的截取函数
@@ -552,7 +552,6 @@ function createTransitionManager() {
   };
 }
 ```
-
 
 `setPrompt`和`confirmTransitionTo`的用意
 1. 设置提示setPrompt：把用户设置的提示信息函数存储在prompt变量
@@ -703,12 +702,129 @@ function createBrowserHistory(props = {}){
 ```
 就是在`handlePop`函数触发`transitionManager.confirmTransitionTo`的（3.1.3我对这里做了修改为了方便理解）。
 
-其中回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮
+---
+
+`transitionManager.confirmTransitionTo`的回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮
 1. 当用户点击提示框的确定后，执行`setState({ action, location })`
-2. 当用户点击提示框的取消后，执行`revertPop(location)`（暂时先不看取消操作）。
+2. 当用户点击提示框的取消后，执行`revertPop(location)`（这里就不展示了，主要作用是跳转回去之前的页面）。
 
 到这里已经了解完`h.block`函数、`h.listen`和`createTransitionManager.js`。接下来我们继续看另一个重要的函数`h.push`
 
-#### 3.1.5 push
+#### 3.6 push
+```javascript
+function createBrowserHistory(props = {}){
+  function push(path, state) {
+    const action = "PUSH";
+    // 构造location
+    const location = createLocation(path, state, createKey(), history.location);
 
-## 4.总结
+    // 执行block函数，弹出框
+    transitionManager.confirmTransitionTo(
+      location,
+      action,
+      getUserConfirmation,
+      ok => {
+        if (!ok) return;
+
+        // 获取当前路径名
+        const href = createHref(location);
+        const { key, state } = location;
+
+        // 添加历史条目
+        globalHistory.pushState({ key, state }, null, href);
+        
+        if (forceRefresh) {
+          // 强制刷新
+          window.location.href = href;
+        } else {
+          // 更新history
+          setState({ action, location });
+        }
+      }
+    );
+  }
+
+  const history = {
+    // 跳转
+    push,
+    ...
+  };
+
+  return history;
+}
+```
+这里最重要的是`globalHistory.pushState`函数，它直接添加新的历史条目。
+
+
+#### 3.7 replace
+```javascript
+function createBrowserHistory(props = {}){
+  function replace(path, state) {
+    const action = "REPLACE";
+    // 构造location
+    const location = createLocation(path, state, createKey(), history.location);
+
+    // 执行block函数，弹出框
+    transitionManager.confirmTransitionTo(
+      location,
+      action,
+      getUserConfirmation,
+      ok => {
+        if (!ok) return;
+        // 获取当前路径名
+        const href = createHref(location);
+        const { key, state } = location;
+
+        globalHistory.replaceState({ key, state }, null, href);
+
+        if (forceRefresh) {
+          window.location.replace(href);
+        } else {
+          setState({ action, location });
+        }
+      }
+    );
+  }
+
+  const history = {
+    // 跳转
+    replace,
+    ...
+  };
+
+  return history;
+}
+```
+其实`push`和`replace`的区别就是`history.pushState`和`history.replaceState`的区别
+
+#### 3.8 go
+```javascript
+function createBrowserHistory(props = {}){
+   function go(n) {
+    globalHistory.go(n);
+  }
+
+  function goBack() {
+    go(-1);
+  }
+
+  function goForward() {
+    go(1);
+  }
+
+  const history = {
+    // 跳转
+    go,
+    goBack,
+    goForward,
+    ...
+  };
+
+  return history;
+}
+```
+其实就是`history.go`的运用
+
+## 4.demo
+
+## 5.总结
