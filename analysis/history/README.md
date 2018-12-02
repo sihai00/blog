@@ -81,7 +81,7 @@ export { default as createMemoryHistory } from "./createMemoryHistory";
 export { createLocation, locationsAreEqual } from "./LocationUtils";
 export { parsePath, createPath } from "./PathUtils";
 ```
-把所有需要暴露的方法根据文件名区分开。其实只要了解的三种创建`history`中的一种，其他原理大概相同，我们先看`history`的构造函数`createBrowserHistory`
+把所有需要暴露的方法根据文件名区分开。其实只要了解的三种创建`history`中的一种，其他原理大概相同，我们先看`history`的构造函数`createBrowserHistory`。
 
 ### 3.1 createBrowserHistory
 ```javascript
@@ -90,7 +90,7 @@ function createBrowserHistory(props = {}){
   // 浏览器的history
   const globalHistory = window.history;
   // 初始化location
-  const initialLocation = getDOMLocation(getHistoryState());
+  const initialLocation = getDOMLocation(window.history.state);
   // 创建地址
   function createHref(location) {
     return basename + createPath(location);
@@ -130,7 +130,13 @@ function createBrowserHistory(props = {}){
 
 export default createBrowserHistory;
 ```
-无论是从代码还是从用法上我们也可以看出，执行了`createBrowserHistory`后函数会返回`history`对象，`history`对象提供了很多属性和方法，最大的疑问应该是`initialLocation`函数，即`history.location`。
+无论是从代码还是从用法上我们也可以看出，执行了`createBrowserHistory`后函数会返回`history`对象，`history`对象提供了很多属性和方法，最大的疑问应该是`initialLocation`函数，即`history.location`。我们的解析顺序如下：
+1. location
+2. createHref
+3. block
+4. listen
+5. push
+6. replace
 
 #### 3.1.1 location
 location属性存储了与地址栏有关的信息，我们对比下`createBrowserHistory`的返回值`history.location`和`window.location`
@@ -159,7 +165,13 @@ window.location = {
   search: "?_ijt=2mt7412gnfvjpfeuv4hjkq2uf8"
 }
 ```
-结论是history.location是window.location的儿砸！我们来研究研究作者是怎么处理的。`initialLocation`函数等于`getDOMLocation`函数的返回值，那么我们关注下`getDOMLocation`函数（`getDOMLocation`在`history`中会经常调用，理解好这个函数比较重要）。
+结论是history.location是window.location的儿砸！我们来研究研究作者是怎么处理的。
+
+```javascript
+const initialLocation = getDOMLocation(window.history.state)
+```
+
+`initialLocation`函数等于`getDOMLocation`函数的返回值（`getDOMLocation`在`history`中会经常调用，理解好这个函数比较重要）。
 
 ```javascript
 // createBrowserHistory.js
@@ -192,7 +204,11 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-一般大型的项目中都会把一个功能拆分成至少两个函数，一个专门处理参数的函数和一个接收处理参数实现功能的函数。`getDOMLocation`函数主要处理`state`和`window.location`这两参数，返回自定义的`history.location`对象，主要构造`history.location`对象是`createLocation`函数。接下来我们看在`LocationUtils.js`文件中的`createLocation`函数
+一般大型的项目中都会把一个功能拆分成至少两个函数，一个专门处理参数的函数和一个接收处理参数实现功能的函数。
+1. 处理参数：`getDOMLocation`函数主要处理`state`和`window.location`这两参数，返回自定义的`history.location`对象，主要构造`history.location`对象是`createLocation`函数。
+2. 构造功能：`createLocation`实现具体构造`location`的逻辑。
+
+接下来我们看在`LocationUtils.js`文件中的`createLocation`函数
 
 ```javascript
 // LocationUtils.js
@@ -249,10 +265,10 @@ export function parsePath(path) {
   };
 }
 ```
-`createLocation`根据传递进来的`path`或者`location`值，返回格式化好的`location`。接下来看`createHref`函数
+`createLocation`根据传递进来的`path`或者`location`值，返回格式化好的`location`，代码简单。
 
 #### 3.1.2 createHref
-`createHref`函数的作用是返回当前的地址，例如地址`http://localhost:63342/history/index.html?a=1`，调用`h.createHref(location)`后返回`/history/index.html?a=1`
+`createHref`函数的作用是返回当前路径名，例如地址`http://localhost:63342/history/index.html?a=1`，调用`h.createHref(location)`后返回`/history/index.html?a=1`
 
 ```javascript
 // createBrowserHistory.js
@@ -280,9 +296,8 @@ function createPath(location) {
   const { pathname, search, hash } = location;
 
   let path = pathname || "/";
-
-  if (search && search !== "?")
-    path += search.charAt(0) === "?" ? search : `?${search}`;
+  
+  if (search && search !== "?") path += search.charAt(0) === "?" ? search : `?${search}`;
 
   if (hash && hash !== "#") path += hash.charAt(0) === "#" ? hash : `#${hash}`;
 
@@ -290,68 +305,209 @@ function createPath(location) {
 }
 ```
 
-当了解完`history`的属性和方法后，我们就开始按照第二章的使用方法去了解其内部方法的实现。
+#### 3.1.3 listen
+在这里我们可以想象下大概的 **监听** 流程
+1. 绑定我们设置的监听函数
+2. 监听历史记录条目的改变，触发监听函数
 
-#### 3.1.3 block
-在**第二章使用**代码中，创建了`History`对象后使用了`h.block`函数。
+---
+
+在**第二章使用**代码中，创建了`History`对象后使用了`h.listen`函数。
 ```javascript
 // index.html
-h.block(function (location, action) {
-  return 'Are you sure you want to go to ' + location.path + '?'
+h.listen(function (location) {
+  console.log(location, 'lis-1')
+})
+h.listen(function (location) {
+  console.log(location, 'lis-2')
 })
 ```
-该方法是用于地址改变之前的截取，可以触发提示信息，下面看源码
+下面看源码。
 
+---
+
+可见`listen`可以绑定多个监听函数，我们先看作者的`createTransitionManager.js`是如何实现绑定多个监听函数的
+
+> `createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
+
+```javascript
+// createTransitionManager.js
+function createTransitionManager() {
+  let listeners = [];
+
+  // 设置监听函数
+  function appendListener(fn) {
+    let isActive = true;
+
+    function listener(...args) {
+      // good
+      if (isActive) fn(...args);
+    }
+
+    listeners.push(listener);
+
+    // 解除
+    return () => {
+      isActive = false;
+      listeners = listeners.filter(item => item !== listener);
+    };
+  }
+
+  // 执行监听函数
+  function notifyListeners(...args) {
+    listeners.forEach(listener => listener(...args));
+  }
+
+  return {
+    appendListener,
+    notifyListeners
+  };
+}
+```
+1. 设置监听函数`appendListener`：`fn`就是用户设置的监听函数，把所有的监听函数存储在`listeners`数组中
+2. 执行监听函数`notifyListeners`：执行的时候仅仅需要循环依次执行即可。
+
+**这里感觉有值得借鉴的地方：添加队列函数时，增加状态管理（如上面代码的`isActive`），决定是否启用**
+
+有了上面的理解，下面看`listen`源码
 ```javascript
 // createBrowserHistory.js
 import createTransitionManager from "./createTransitionManager";
 const transitionManager = createTransitionManager();
 
 function createBrowserHistory(props = {}){
-  let isBlocked = false;
+  function listen(listener) {
+    // 添加 监听函数 到 队列
+    const unlisten = transitionManager.appendListener(listener);
 
-  function block(prompt = false) {
-    // 设置提示
-    const unblock = transitionManager.setPrompt(prompt);
+    // 添加 历史记录条目 的监听
+    checkDOMListeners(1);
 
-    // 是否设置了block
-    if (!isBlocked) {
-      checkDOMListeners(1);
-      isBlocked = true;
-    }
-
-    // 解除block函数
+    // 解除监听
     return () => {
-      if (isBlocked) {
-        isBlocked = false;
-        checkDOMListeners(-1);
-      }
-
-      // 消除提示
-      return unblock();
+      checkDOMListeners(-1);
+      unlisten();
     };
   }
 
   const history = {
-    // 截取
-    block,
+    // 监听
+    listen
+    ...
+  };
+
+  return history;
+}
+
+
+```
+`history.listen`是当历史记录条目改变时，触发回调监听函数。所以这里有两步
+1. `transitionManager.appendListener(listener)`把回调的监听函数添加到队列里
+2. `checkDOMListeners`监听历史记录条目的改变
+
+下面看看如何历史记录条目的改变`checkDOMListeners(1)`
+```javascript
+// createBrowserHistory.js
+function createBrowserHistory(props = {}){
+  let listenerCount = 0;
+
+  function checkDOMListeners(delta) {
+    listenerCount += delta;
+    
+    // 是否已经添加
+    if (listenerCount === 1 && delta === 1) {
+      // 添加绑定，当历史记录条目改变的时候
+      window.addEventListener('popstate', handlePopState);
+    } else if (listenerCount === 0) {
+      //  解除绑定
+      window.removeEventListener('popstate', handlePopState);
+    }
+  }
+  
+  // getDOMLocation(event.state) = location = {
+  //   hash: ""
+  //   pathname: "/history/index.html"
+  //   search: "?_ijt=2mt7412gnfvjpfeuv4hjkq2uf8"
+  //   state: undefined
+  // }
+  function handlePopState(event) {
+    handlePop(getDOMLocation(event.state));
+  }
+  
+  // 是否刷新页面
+  let forceNextPop = false;
+
+  function handlePop(location) {
+    if (forceNextPop) {
+      // 强制刷新页面
+      forceNextPop = false;
+      setState();
+    } else {
+      // 不需要刷新页面
+      const action = "POP";
+
+      setState({ action, location })
+    }
+  }
+}
+```
+虽然作者写了很多很细的回调函数，可能会导致有些不好理解，但细细看还是有它道理的。
+1. `checkDOMListeners`：全局只能有一个监听历史记录条目的函数
+2. `handlePopState`：必须把监听函数提取出来，不然不能解绑
+3. `handlePop`：监听历史记录条目的核心函数，监听成功后执行`setState`
+
+`setState({ action, location })`作用是根据当前地址信息（`location`）更新history
+```javascript
+// createBrowserHistory.js
+function createBrowserHistory(props = {}){
+  function setState(nextState) {
+    // 更新history
+    Object.assign(history, nextState);
+    history.length = globalHistory.length;
+
+    // 执行调监听函数listen
+    transitionManager.notifyListeners(history.location, history.action);
+  }
+
+  const history = {
+    // 监听
+    listen
     ...
   };
 
   return history;
 }
 ```
-`history.block`是当地址栏改变时，触发提示信息。所以这里有两步
-1. `transitionManager.setPrompt(prompt)` 设置提示
-2. `checkDOMListeners` 监听地址栏的改变
+在这里，当更改历史记录条目成功后
+1. 更新history
+2. 执行监听函数listen
 
-> `createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
+这就是`h.listen`的主要流程了，是不是还挺简单的
 
-**这里感觉有值得借鉴的地方：调用`history.block`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原（有趣）**
+#### 3.1.4 block
+
+`history.block`的功能是当历史记录条目改变时，触发提示信息。在这里我们可以想象下大概的 **截取** 流程
+1. 绑定我们设置的截取函数
+2. 监听历史记录条目的改变，触发截取函数
+
+哈哈这里是不是感觉跟`listen`函数的套路差不多呢？其实`h.listen`和`h.block`的监听历史记录条目改变的代码是公用同一套（当然拉只能绑定一个监听历史记录条目改变的函数），3.1.3为了方便理解我修改了部分代码，下面是完整的源码
 
 ---
 
-下面看看createTransitionManager，这里我们直接看完`createTransitionManager`是如何设置提示和实现提示功能的
+在**第二章使用**代码中，创建了`History`对象后使用了`h.block`函数（只能绑定一个`block`函数）。
+```javascript
+// index.html
+h.block(function (location, action) {
+  return 'Are you sure you want to go to ' + location.path + '?'
+})
+```
+
+---
+
+同样的我们先看看作者的`createTransitionManager.js`是如何实现提示的。
+
+> `createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
+
 ```javascript
 // createTransitionManager.js
 function createTransitionManager() {
@@ -396,13 +552,66 @@ function createTransitionManager() {
   };
 }
 ```
+
+
 `setPrompt`和`confirmTransitionTo`的用意
-1. 设置提示setPrompt：把用户设置的函数存储在prompt变量
-2. 实现提示confirmTransitionTo：执行prompt变量得到提示信息，执行callback把提示信息作为结果返回出去（当地址栏改变的时候执行这个函数，接下面会用到）
+1. 设置提示setPrompt：把用户设置的提示信息函数存储在prompt变量
+2. 实现提示confirmTransitionTo：
+    1. 得到提示信息：执行prompt变量
+    2. 提示信息后的回调：执行callback把提示信息作为结果返回出去
 
 ---
 
-当设置提示之后，就需要监听地址栏的改变，当地址栏改变的时候就可以触发提示了（也就是`confirmTransitionTo`函数）。我们看看监听地址栏函数`checkDOMListeners`
+下面看`h.block`源码
+```javascript
+// createBrowserHistory.js
+import createTransitionManager from "./createTransitionManager";
+const transitionManager = createTransitionManager();
+
+function createBrowserHistory(props = {}){
+  let isBlocked = false;
+
+  function block(prompt = false) {
+    // 设置提示
+    const unblock = transitionManager.setPrompt(prompt);
+
+    // 是否设置了block
+    if (!isBlocked) {
+      checkDOMListeners(1);
+      isBlocked = true;
+    }
+
+    // 解除block函数
+    return () => {
+      if (isBlocked) {
+        isBlocked = false;
+        checkDOMListeners(-1);
+      }
+
+      // 消除提示
+      return unblock();
+    };
+  }
+
+  const history = {
+    // 截取
+    block,
+    ...
+  };
+
+  return history;
+}
+```
+`history.block`的功能是当历史记录条目改变时，触发提示信息。所以这里有两步
+1. `transitionManager.setPrompt(prompt)` 设置提示
+2. `checkDOMListeners` 监听历史记录条目改变的改变
+
+**这里感觉有值得借鉴的地方：调用`history.block`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原。（有趣）**
+
+---
+
+我们看看监听历史记录条目改变函数`checkDOMListeners(1)`（注意：`transitionManager.confirmTransitionTo`）。
+
 ```javascript
 // createBrowserHistory.js
 function createBrowserHistory(props = {}){
@@ -484,124 +693,21 @@ function createBrowserHistory(props = {}){
   }
 
   const history = {
-    // 监听
-    listen
+    // 截取
+    block
     ...
   };
 
   return history;
 }
 ```
-虽然作者写了很多很细的回调函数，可能会导致有些不好理解，但细细看还是有它道理的。
-1. 绑定监听函数：`window.addEventListener('popstate', handlePopState)`
-2. 现实提示信息：在监听函数里调用了`transitionManager.confirmTransitionTo`来执行block函数。
+就是在`handlePop`函数触发`transitionManager.confirmTransitionTo`的（3.1.3我对这里做了修改为了方便理解）。
 
---- 
+其中回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮
+1. 当用户点击提示框的确定后，执行`setState({ action, location })`
+2. 当用户点击提示框的取消后，执行`revertPop(location)`（暂时先不看取消操作）。
 
-当用户点击提示框的确定后，执行`setState({ action, location })`，当用户点击点击提示框的取消后，执行`revertPop(location)`（暂时先不看取消操作）。
-```javascript
-// createBrowserHistory.js
-function createBrowserHistory(props = {}){
-  function setState(nextState) {
-    // 更新history
-    Object.assign(history, nextState);
-    history.length = globalHistory.length;
-
-    // 执行监听函数listener
-    transitionManager.notifyListeners(history.location, history.action);
-  }
-
-  const history = {
-    // 监听
-    listen
-    ...
-  };
-
-  return history;
-}
-```
-`setState`做了两件事
-1. 更新`history`
-2. 执行绑定的回调监听函数`listen`（暂时知道是触发`h.listen()`函数即可，下面会解析）
-
-到这里已经了解完`h.block`函数、`createTransitionManager`提示相关函数。接下来我们继续看另一个重要的函数`h.listen`
-
-#### 3.1.4 listen
-在**第二章使用**代码中，创建了`History`对象后使用了`h.listen`函数。
-```javascript
-// index.html
-h.listen(function (location) {
-  console.log(location, 'lis-1')
-})
-```
-该方法是用于监听路由的改变，下面看源码
-
-```javascript
-// createBrowserHistory.js
-import createTransitionManager from "./createTransitionManager";
-const transitionManager = createTransitionManager();
-
-function createBrowserHistory(props = {}){
-  function listen(listener) {
-    // 添加 监听函数 到 队列
-    const unlisten = transitionManager.appendListener(listener);
-
-    // 添加 地址栏改变 的监听
-    checkDOMListeners(1);
-
-    // 解除监听
-    return () => {
-      checkDOMListeners(-1);
-      unlisten();
-    };
-  }
-
-  const history = {
-    // 监听
-    listen
-    ...
-  };
-
-  return history;
-}
-
-// createTransitionManager.js
-function createTransitionManager() {
-  let listeners = [];
-
-  // 设置监听函数
-  function appendListener(fn) {
-    let isActive = true;
-
-    function listener(...args) {
-      if (isActive) fn(...args);
-    }
-
-    listeners.push(listener);
-
-    // 解除
-    return () => {
-      isActive = false;
-      listeners = listeners.filter(item => item !== listener);
-    };
-  }
-
-  // 执行监听函数
-  function notifyListeners(...args) {
-    listeners.forEach(listener => listener(...args));
-  }
-
-  return {
-    appendListener,
-    notifyListeners
-  };
-}
-```
-`history.listen`的效果是当地址栏改变时，触发回调监听函数。所以这里有两步
-1. `transitionManager.appendListener(listener)`把回调的监听函数添加到队列里（使用队列说明可以添加无数的回调监听函数）
-2. `checkDOMListeners`监听地址栏的改变（3.1.3中`h.block`已经做了解析）
-
-**这里感觉有值得借鉴的地方：添加队列函数时，增加状态管理（如上面代码的`isActive`），决定是否启用**
+到这里已经了解完`h.block`函数、`h.listen`和`createTransitionManager.js`。接下来我们继续看另一个重要的函数`h.push`
 
 #### 3.1.5 push
 
