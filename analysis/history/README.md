@@ -2,23 +2,23 @@
 > `history`是一个JavaScript库，可让你在JavaScript运行的任何地方轻松管理会话历史记录
 
 ## 1.前言
-`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如Node、React Native等）。
+`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如`Node`、`React Native`等）。
 
-本篇读后感分为四部分，分别为前言、使用、解析、demo、总结，四部分互不相连可根据需要分开看。
+本篇读后感分为五部分，分别为前言、使用、解析、demo、总结，五部分互不相连可根据需要分开看。
 
-前言和总结为吹水，解析为源码的解析，demo是抽取源码的核心实现的小demo，学以致用。
+前言和总结为吹水、使用为库的使用、解析为源码的解析、demo是抽取源码的核心实现的小demo，学以致用。
 
 **建议跟着源码结合本文阅读，这样更加容易理解！** 
 1. [history](https://github.com/ReactTraining/history)
 2. [history解析的Github地址](https://github.com/sihai00/blog/blob/master/analysis/history)
 
 ## 2.使用
-`history`有三种不同的方法创建history对象，取决于你的代码环境
-1. createBrowserHistory：支持`HTML5 history api`的现代浏览器（例如：/index）
-2. createHashHistory：传统浏览器（例如：/#/index）
-3. createMemoryHistory：没有Dom的环境（例如：Node、React Native）
+`history`有三种不同的方法创建history对象，取决于你的代码环境：
+1. `createBrowserHistory`：支持`HTML5 history api`的现代浏览器（例如：`/index`）；
+2. `createHashHistory`：传统浏览器（例如：`/#/index`）；
+3. `createMemoryHistory`：没有Dom的环境（例如：`Node`、`React Native`）。
 
-> 注意：本片文章只解析`createBrowserHistory`，其实原理都是差不多的
+> 注意：本片文章只解析`createBrowserHistory`，其实三种构造原理都是差不多的
 
 ```html
 <!DOCTYPE html>
@@ -61,19 +61,18 @@
 ## 3.解析
 **贴出来的源码我会删减对理解原理不重要的部分！！!如果想看完整的请下载源码看哈**
 
-从history的源码库目录可以看到modules文件夹，包含了几个文件
-1. createBrowserHistory.js 创建createBrowserHistory的history对象
-2. createHashHistory.js 创建createHashHistory的history对象
-3. createMemoryHistory.js 创建createMemoryHistory的history对象
-4. createTransitionManager.js 过渡管理（例如：处理block函数中的弹框、处理listener的队列）
-5. DOMUtils.js DOM工具类（例如弹框、判断浏览器兼容性）
-6. index.js 入口文件
-7. LocationUtils.js 处理Location工具
-8. PathUtils.js 处理Path工具
+从history的源码库目录可以看到modules文件夹，包含了几个文件：
+1. createBrowserHistory.js 创建createBrowserHistory的history对象；
+2. createHashHistory.js 创建createHashHistory的history对象；
+3. createMemoryHistory.js 创建createMemoryHistory的history对象；
+4. createTransitionManager.js 过渡管理（例如：处理block函数中的弹框、处理listener的队列）；
+5. DOMUtils.js Dom工具类（例如弹框、判断浏览器兼容性）；
+6. index.js 入口文件；
+7. LocationUtils.js 处理Location工具；
+8. PathUtils.js 处理Path工具。
 
 ---
-
-入口文件index.js
+入口文件index.js
 ```javascript
 export { default as createBrowserHistory } from "./createBrowserHistory";
 export { default as createHashHistory } from "./createHashHistory";
@@ -81,7 +80,7 @@ export { default as createMemoryHistory } from "./createMemoryHistory";
 export { createLocation, locationsAreEqual } from "./LocationUtils";
 export { parsePath, createPath } from "./PathUtils";
 ```
-把所有需要暴露的方法根据文件名区分开。其实只要了解的三种创建`history`中的一种，其他原理大概相同，我们先看`history`的构造函数`createBrowserHistory`。
+把所有需要暴露的方法根据文件名区分开，我们先看`history`的构造函数`createBrowserHistory`。
 
 ### 3.1 createBrowserHistory
 ```javascript
@@ -131,12 +130,12 @@ function createBrowserHistory(props = {}){
 export default createBrowserHistory;
 ```
 无论是从代码还是从用法上我们也可以看出，执行了`createBrowserHistory`后函数会返回`history`对象，`history`对象提供了很多属性和方法，最大的疑问应该是`initialLocation`函数，即`history.location`。我们的解析顺序如下：
-1. location
-2. createHref
-3. block
-4. listen
-5. push
-6. replace
+1. location；
+2. createHref；
+3. block；
+4. listen；
+5. push；
+6. replace。
 
 #### 3.2 location
 location属性存储了与地址栏有关的信息，我们对比下`createBrowserHistory`的返回值`history.location`和`window.location`
@@ -188,7 +187,7 @@ function createBrowserHistory(props = {}){
 
     let path = pathname + search + hash;
 
-    // 保证path是不包含basename的
+    // 保证path是不包含basename的
     if (basename) path = stripBasename(path, basename);
 
     // 创建history.location对象
@@ -196,7 +195,7 @@ function createBrowserHistory(props = {}){
   };
 
   const history = {
-    // location对象（与地址有关）
+    // location对象（与地址有关）
     location: initialLocation,
     ...
   };
@@ -204,8 +203,8 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-一般大型的项目中都会把一个功能拆分成至少两个函数，一个专门处理参数的函数和一个接收处理参数实现功能的函数。
-1. 处理参数：`getDOMLocation`函数主要处理`state`和`window.location`这两参数，返回自定义的`history.location`对象，主要构造`history.location`对象是`createLocation`函数。
+一般大型的项目中都会把一个功能拆分成至少两个函数，一个专门处理参数的函数和一个接收处理参数实现功能的函数：
+1. 处理参数：`getDOMLocation`函数主要处理`state`和`window.location`这两参数，返回自定义的`history.location`对象，主要构造`history.location`对象是`createLocation`函数；
 2. 构造功能：`createLocation`实现具体构造`location`的逻辑。
 
 接下来我们看在`LocationUtils.js`文件中的`createLocation`函数
@@ -306,9 +305,9 @@ function createPath(location) {
 ```
 
 #### 3.4 listen
-在这里我们可以想象下大概的 **监听** 流程
-1. 绑定我们设置的监听函数
-2. 监听历史记录条目的改变，触发监听函数
+在这里我们可以想象下大概的 **监听** 流程：
+1. 绑定我们设置的监听函数；
+2. 监听历史记录条目的改变，触发监听函数。
 
 ---
 
@@ -322,11 +321,10 @@ h.listen(function (location) {
   console.log(location, 'lis-2')
 })
 ```
-下面看源码。
 
 ---
 
-可见`listen`可以绑定多个监听函数，我们先看作者的`createTransitionManager.js`是如何实现绑定多个监听函数的
+可见`listen`可以绑定多个监听函数，我们先看作者的`createTransitionManager.js`是如何实现绑定多个监听函数的。
 
 > `createTransitionManager`是过渡管理（例如：处理block函数中的弹框、处理listener的队列）。代码风格跟createBrowserHistory几乎一致，暴露全局函数，调用后返回对象即可使用。
 
@@ -364,12 +362,12 @@ function createTransitionManager() {
   };
 }
 ```
-1. 设置监听函数`appendListener`：`fn`就是用户设置的监听函数，把所有的监听函数存储在`listeners`数组中
+1. 设置监听函数`appendListener`：`fn`就是用户设置的监听函数，把所有的监听函数存储在`listeners`数组中；
 2. 执行监听函数`notifyListeners`：执行的时候仅仅需要循环依次执行即可。
 
-**这里感觉有值得借鉴的地方：添加队列函数时，增加状态管理（如上面代码的`isActive`），决定是否启用**
+**这里感觉有值得借鉴的地方：添加队列函数时，增加状态管理（如上面代码的`isActive`），决定是否启用。**
 
-有了上面的理解，下面看`listen`源码
+有了上面的理解，下面看`listen`源码。
 ```javascript
 // createBrowserHistory.js
 import createTransitionManager from "./createTransitionManager";
@@ -401,11 +399,11 @@ function createBrowserHistory(props = {}){
 
 
 ```
-`history.listen`是当历史记录条目改变时，触发回调监听函数。所以这里有两步
-1. `transitionManager.appendListener(listener)`把回调的监听函数添加到队列里
-2. `checkDOMListeners`监听历史记录条目的改变
+`history.listen`是当历史记录条目改变时，触发回调监听函数。所以这里有两步：
+1. `transitionManager.appendListener(listener)`把回调的监听函数添加到队列里；
+2. `checkDOMListeners`监听历史记录条目的改变；
 
-下面看看如何历史记录条目的改变`checkDOMListeners(1)`
+下面看看如何历史记录条目的改变`checkDOMListeners(1)`。
 ```javascript
 // createBrowserHistory.js
 function createBrowserHistory(props = {}){
@@ -451,12 +449,12 @@ function createBrowserHistory(props = {}){
   }
 }
 ```
-虽然作者写了很多很细的回调函数，可能会导致有些不好理解，但细细看还是有它道理的。
-1. `checkDOMListeners`：全局只能有一个监听历史记录条目的函数
-2. `handlePopState`：必须把监听函数提取出来，不然不能解绑
-3. `handlePop`：监听历史记录条目的核心函数，监听成功后执行`setState`
+虽然作者写了很多很细的回调函数，可能会导致有些不好理解，但细细看还是有它道理的：
+1. `checkDOMListeners`：全局只能有一个监听历史记录条目的函数（`listenerCount`来控制）；
+2. `handlePopState`：必须把监听函数提取出来，不然不能解绑；
+3. `handlePop`：监听历史记录条目的核心函数，监听成功后执行`setState`。
 
-`setState({ action, location })`作用是根据当前地址信息（`location`）更新history
+`setState({ action, location })`作用是根据当前地址信息（`location`）更新history。
 ```javascript
 // createBrowserHistory.js
 function createBrowserHistory(props = {}){
@@ -478,19 +476,19 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-在这里，当更改历史记录条目成功后
-1. 更新history
-2. 执行监听函数listen
+在这里，当更改历史记录条目成功后：
+1. 更新history；
+2. 执行监听函数listen；
 
-这就是`h.listen`的主要流程了，是不是还挺简单的
+这就是`h.listen`的主要流程了，是不是还挺简单的。
 
 #### 3.5 block
 
-`history.block`的功能是当历史记录条目改变时，触发提示信息。在这里我们可以想象下大概的 **截取** 流程
-1. 绑定我们设置的截取函数
-2. 监听历史记录条目的改变，触发截取函数
+`history.block`的功能是当历史记录条目改变时，触发提示信息。在这里我们可以想象下大概的 **截取** 流程：
+1. 绑定我们设置的截取函数；
+2. 监听历史记录条目的改变，触发截取函数。
 
-哈哈这里是不是感觉跟`listen`函数的套路差不多呢？其实`h.listen`和`h.block`的监听历史记录条目改变的代码是公用同一套（当然拉只能绑定一个监听历史记录条目改变的函数），3.1.3为了方便理解我修改了部分代码，下面是完整的源码
+哈哈这里是不是感觉跟`listen`函数的套路差不多呢？其实`h.listen`和`h.block`的监听历史记录条目改变的代码是公用同一套（当然拉只能绑定一个监听历史记录条目改变的函数），3.1.3为了方便理解我修改了部分代码，下面是完整的源码。
 
 ---
 
@@ -553,15 +551,15 @@ function createTransitionManager() {
 }
 ```
 
-`setPrompt`和`confirmTransitionTo`的用意
-1. 设置提示setPrompt：把用户设置的提示信息函数存储在prompt变量
+`setPrompt`和`confirmTransitionTo`的用意：
+1. 设置提示setPrompt：把用户设置的提示信息函数存储在prompt变量；
 2. 实现提示confirmTransitionTo：
-    1. 得到提示信息：执行prompt变量
-    2. 提示信息后的回调：执行callback把提示信息作为结果返回出去
+    1. 得到提示信息：执行prompt变量；
+    2. 提示信息后的回调：执行callback把提示信息作为结果返回出去。
 
 ---
 
-下面看`h.block`源码
+下面看`h.block`源码。
 ```javascript
 // createBrowserHistory.js
 import createTransitionManager from "./createTransitionManager";
@@ -601,11 +599,11 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-`history.block`的功能是当历史记录条目改变时，触发提示信息。所以这里有两步
-1. `transitionManager.setPrompt(prompt)` 设置提示
-2. `checkDOMListeners` 监听历史记录条目改变的改变
+`history.block`的功能是当历史记录条目改变时，触发提示信息。所以这里有两步：
+1. `transitionManager.setPrompt(prompt)` 设置提示；
+2. `checkDOMListeners` 监听历史记录条目改变的改变。
 
-**这里感觉有值得借鉴的地方：调用`history.block`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原。（有趣）**
+**这里感觉有值得借鉴的地方：调用`history.block`，它会返回一个解除监听方法，只要调用一下返回函数即可解除监听或者复原（有趣）。**
 
 ---
 
@@ -704,11 +702,11 @@ function createBrowserHistory(props = {}){
 
 ---
 
-`transitionManager.confirmTransitionTo`的回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮
-1. 当用户点击提示框的确定后，执行`setState({ action, location })`
-2. 当用户点击提示框的取消后，执行`revertPop(location)`（这里就不展示了，主要作用是跳转回去之前的页面）。
+`transitionManager.confirmTransitionTo`的回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮：
+1. 当用户点击提示框的确定后，执行`setState({ action, location })`；
+2. 当用户点击提示框的取消后，执行`revertPop(location)`（暂时忽略）。
 
-到这里已经了解完`h.block`函数、`h.listen`和`createTransitionManager.js`。接下来我们继续看另一个重要的函数`h.push`
+到这里已经了解完`h.block`函数、`h.listen`和`createTransitionManager.js`。接下来我们继续看另一个重要的函数`h.push`。
 
 #### 3.6 push
 ```javascript
@@ -755,7 +753,6 @@ function createBrowserHistory(props = {}){
 ```
 这里最重要的是`globalHistory.pushState`函数，它直接添加新的历史条目。
 
-
 #### 3.7 replace
 ```javascript
 function createBrowserHistory(props = {}){
@@ -795,7 +792,7 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-其实`push`和`replace`的区别就是`history.pushState`和`history.replaceState`的区别
+其实`push`和`replace`的区别就是`history.pushState`和`history.replaceState`的区别。
 
 #### 3.8 go
 ```javascript
@@ -823,8 +820,12 @@ function createBrowserHistory(props = {}){
   return history;
 }
 ```
-其实就是`history.go`的运用
+其实就是`history.go`的运用。
 
 ## 4.demo
+手把手教你写history，稍后放出哈哈哈～
 
 ## 5.总结
+总的来说，如果不需要`block`的话，原生方法可以满足。最主要还是对`history.pushState`、`history.replaceState`、`history.go(n)`、`popstate`方法的运用。公司加班严重，利用仅剩的时间扩充下自己的知识面，最好的方法那就是阅读源码了哈哈。开始总会有点困难，第一次读一脸懵逼，第二次读二脸懵逼，第三次读有点懵逼，第四次读这b牛逼～。只要坚持下多写点测试用例慢慢理解就好了，加油！
+
+![fafa](https://user-gold-cdn.xitu.io/2018/12/3/167720e7733842e4?w=1080&h=1440&f=jpeg&s=367838)
