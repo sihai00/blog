@@ -99,6 +99,12 @@ function createBrowserHistory(props = {}) {
     transitionManager.notifyListeners(history.location, history.action);
   }
 
+  // getDOMLocation(event.state) = location = {
+  //   hash: ""
+  //   pathname: "/history/index.html"
+  //   search: "?_ijt=2mt7412gnfvjpfeuv4hjkq2uf8"
+  //   state: undefined
+  // }
   function handlePopState(event) {
     // Ignore extraneous popstate events in WebKit.
     if (isExtraneousPopstateEvent(event)) return;
@@ -292,13 +298,15 @@ function createBrowserHistory(props = {}) {
 
   function checkDOMListeners(delta) {
     listenerCount += delta;
-
+    
+    // 是否已经添加
     if (listenerCount === 1 && delta === 1) {
-      // 监听history
+      // 添加绑定，当历史记录条目改变的时候
       window.addEventListener(PopStateEvent, handlePopState);
       if (needsHashChangeListener)
         window.addEventListener(HashChangeEvent, handleHashChange);
     } else if (listenerCount === 0) {
+      //  解除绑定
       window.removeEventListener(PopStateEvent, handlePopState);
 
       if (needsHashChangeListener)
@@ -306,6 +314,7 @@ function createBrowserHistory(props = {}) {
     }
   }
 
+  //  跳过block。因为当点击弹出框的取消后，会执行go，然后会再一次执行handlePop函数，此次要跳过
   let isBlocked = false;
 
   /**
@@ -341,9 +350,10 @@ function createBrowserHistory(props = {}) {
    * @returns {Function}
    */
   function listen(listener) {
-    // 添加监听函数到队列
+    // 添加 监听函数 到 队列
     const unlisten = transitionManager.appendListener(listener);
-
+    
+    // 添加 历史记录条目 的监听
     checkDOMListeners(1);
 
     // 解除监听

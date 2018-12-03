@@ -16,9 +16,9 @@ function createTransitionManager() {
   }
 
   /**
-   * 执行提示
-   * @param location
-   * @param action
+   * 实现提示
+   * @param location：地址
+   * @param action：行为
    * @param getUserConfirmation 设置弹框
    * @param callback 回调函数：block函数的返回值作为参数
    */

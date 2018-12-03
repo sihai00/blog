@@ -6,7 +6,7 @@
 
 本篇读后感分为五部分，分别为前言、使用、解析、demo、总结，五部分互不相连可根据需要分开看。
 
-前言和总结为吹水、使用为库的使用、解析为源码的解析、demo是抽取源码的核心实现的小demo，学以致用。
+前言为介绍、使用为库的使用、解析为源码的解析、demo是抽取源码的核心实现的小demo，总结为吹水，学以致用。
 
 **建议跟着源码结合本文阅读，这样更加容易理解！** 
 1. [history](https://github.com/ReactTraining/history)
@@ -432,20 +432,9 @@ function createBrowserHistory(props = {}){
     handlePop(getDOMLocation(event.state));
   }
   
-  // 是否刷新页面
-  let forceNextPop = false;
-
   function handlePop(location) {
-    if (forceNextPop) {
-      // 强制刷新页面
-      forceNextPop = false;
-      setState();
-    } else {
-      // 不需要刷新页面
-      const action = "POP";
-
-      setState({ action, location })
-    }
+    const action = "POP";
+    setState({ action, location })
   }
 }
 ```
@@ -659,34 +648,25 @@ function createBrowserHistory(props = {}){
     handlePop(getDOMLocation(event.state));
   }
   
-  // 是否刷新页面
-  let forceNextPop = false;
-
   function handlePop(location) {
-    if (forceNextPop) {
-      // 强制刷新页面
-      forceNextPop = false;
-      setState();
-    } else {
-      // 不需要刷新页面
-      const action = "POP";
+    // 不需要刷新页面
+    const action = "POP";
 
-      // 实现提示
-      transitionManager.confirmTransitionTo(
-        location,
-        action,
-        getUserConfirmation,
-        ok => {
-          if (ok) {
-            // 确定
-            setState({ action, location });
-          } else {
-            // 取消
-            revertPop(location);
-          }
+    // 实现提示
+    transitionManager.confirmTransitionTo(
+      location,
+      action,
+      getUserConfirmation,
+      ok => {
+        if (ok) {
+          // 确定
+          setState({ action, location });
+        } else {
+          // 取消
+          revertPop(location);
         }
-      );
-    }
+      }
+    );
   }
 
   const history = {
@@ -704,7 +684,7 @@ function createBrowserHistory(props = {}){
 
 `transitionManager.confirmTransitionTo`的回调函数callback有两条分支，用户点击提示框的确定按钮或者取消按钮：
 1. 当用户点击提示框的确定后，执行`setState({ action, location })`；
-2. 当用户点击提示框的取消后，执行`revertPop(location)`（暂时忽略）。
+2. 当用户点击提示框的取消后，执行`revertPop(location)`（忽略）。
 
 到这里已经了解完`h.block`函数、`h.listen`和`createTransitionManager.js`。接下来我们继续看另一个重要的函数`h.push`。
 

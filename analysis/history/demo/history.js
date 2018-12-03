@@ -39,7 +39,7 @@
       }
     }
 
-    // 强制执行handlePop。因为当点击弹出框的取消后，会执行go，然后会再一次执行handlePop函数，此次要跳过
+    // 跳过block。因为当点击弹出框的取消后，会执行go，然后会再一次执行handlePop函数，此次要跳过
     let forceNextPop = false
     // 监听历史条目改变
     function handlePop(event){
