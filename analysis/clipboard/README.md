@@ -1,4 +1,4 @@
-# 复制到剪切板插件clipboard.js源码解析
+# clipboard.js源码解析-复制到剪切板插件
 > [clipboard.js](https://github.com/zenorocha/clipboard.js) 是一个小型的复制到剪切板插件，只有3kb，非flash
 
 ## 1.前言

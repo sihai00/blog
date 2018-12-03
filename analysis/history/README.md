@@ -1,4 +1,4 @@
-# history源码解析
+# history源码解析-管理会话历史记录
 > `history`是一个JavaScript库，可让你在JavaScript运行的任何地方轻松管理会话历史记录
 
 ## 1.前言
@@ -49,7 +49,7 @@
     <p>
       <!-- h.push用于跳转 -->
       <button onclick="page++; h.push('/' + page, { page: page })">history.push</button>
-      <!-- <button onclick="page++; h.push('/' + page)">history.push</button> -->
+      <!-- <button onclick="page++; h.push('/#/' + page)">history.push</button> -->
 
       <button onclick="h.goBack()">history.goBack</button>
     </p>
