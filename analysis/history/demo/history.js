@@ -3,7 +3,6 @@
     createBrowserHistory
   }
 
-  // createBrowserHistory
   function createBrowserHistory(){
     // key
     function createKey() {
@@ -19,11 +18,13 @@
     }
     // location地址信息
     let initialLocation = getDOMLocation()
+
     // 初始化allKeys
     let allKeys = [initialLocation.key]
 
     // listen数组
     let listener = []
+    // 监听
     function listen(fn){
       listener.push(fn)
 
@@ -48,7 +49,7 @@
         forceNextPop = false
       } else {
         // 弹出框
-        let isComfirm = window.confirm(prompt(window.location))
+        let isComfirm = prompt && window.confirm(prompt(window.location)) && true
 
         if (isComfirm) {
           // 确定
@@ -83,7 +84,7 @@
 
     // push
     function push(href){
-      let isComfirm = window.confirm(prompt(window.location))
+      let isComfirm = prompt && window.confirm(prompt(window.location)) && true
 
       if (isComfirm) {
         let key = createKey()
@@ -97,8 +98,6 @@
 
         // 更新history
         Object.assign(history, {location, length: history.length})
-      } else {
-
       }
     }
 
