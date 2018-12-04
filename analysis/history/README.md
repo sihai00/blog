@@ -2,7 +2,7 @@
 > `history`是一个JavaScript库，可让你在JavaScript运行的任何地方轻松管理会话历史记录
 
 ## 1.前言
-`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如`Node`、`React Native`等）。
+`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如`Node`、`React Native`等）。本文中`history`指仓库的对象，`window.history`指浏览器的对象。
 
 本篇读后感分为五部分，分别为前言、使用、解析、demo、总结，五部分互不相连可根据需要分开看。
 

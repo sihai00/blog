@@ -1,10 +1,10 @@
-# 手把手教你写history
+# 手把手带你上react-router的history车
 接上一篇[history源码解析-管理会话历史记录](https://juejin.im/post/5c049f23e51d455b5a4368bd)，本篇教你手写`history`，重在理解其原理。
 
 > `history`是一个JavaScript库，可让你在JavaScript运行的任何地方轻松管理会话历史记录
 
 ## 1.前言
-`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如`Node`、`React Native`等）。本文中`history`指仓库的对象，`window.history`指浏览器的对象
+`history`是由Facebook维护的，`react-router`依赖于`history`，区别于浏览器的`window.history`，`history`是包含`window.history`的，让开发者可以在任何环境都能使用`history`的api（例如`Node`、`React Native`等）。本文中`history`指仓库的对象，`window.history`指浏览器的对象。
 
 本篇读后感分为五部分，分别为前言、使用、原理、上手、总结，推荐顺序阅读哈哈。
 
@@ -59,7 +59,7 @@
 ## 3.原理
 ![原理](./history-demo.png)
 
-词语解释：
+解释：
 1. `push`、`replace`、`go`、`goBack`：仓库`history`的方法
 2. `pushState`、`replaceState`：`window.history`的方法，用于修改`window.history`历史记录
 3. `popstate`：监听历史记录的改变`window.addEventListener('popstate', callback)`
@@ -69,7 +69,7 @@
 
 > 当活动历史记录条目更改时，将触发popstate事件。需要注意的是调用history.pushState()或history.replaceState()不会触发popstate事件。只有在做出浏览器动作时，才会触发该事件，如用户点击浏览器的回退按钮（或者在Javascript代码中调用history.back()）
 
-路线1（`push`和`replace`）：
+**路线1（`push`和`replace`）**：
 1. 用户调用`push`；
 2. 弹出弹出框；
     1. 点确定按钮：
@@ -78,7 +78,7 @@
         3. 维护自定义变量`allKeys`，添加`key`到`allKeys`数组。
     2. 点取消按钮：不操作。
 
-线路2（`go`和`goBack`）：
+**线路2（`go`和`goBack`）**：
 1. 用户调用`go`；
 2. 修改历史记录`window.history`，地址改变；
 4. 触发`popstate`历史记录监听函数（如果绑定了`popstate`监听函数）；
