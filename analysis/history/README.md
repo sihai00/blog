@@ -11,6 +11,7 @@
 **建议跟着源码结合本文阅读，这样更加容易理解！** 
 1. [history](https://github.com/ReactTraining/history)
 2. [history解析的Github地址](https://github.com/sihai00/blog/blob/master/analysis/history)
+3. [手把手带你上react-router的history车](https://juejin.im/post/5c0640f9f265da6135725930)
 
 ## 2.使用
 `history`有三种不同的方法创建history对象，取决于你的代码环境：
@@ -803,7 +804,7 @@ function createBrowserHistory(props = {}){
 其实就是`history.go`的运用。
 
 ## 4.demo
-手把手教你写history，稍后放出哈哈哈～
+[手把手带你上react-router的history车](https://juejin.im/post/5c0640f9f265da6135725930)
 
 ## 5.总结
 总的来说，如果不需要`block`的话，原生方法可以满足。最主要还是对`history.pushState`、`history.replaceState`、`history.go(n)`、`popstate`方法的运用。公司加班严重，利用仅剩的时间扩充下自己的知识面，最好的方法那就是阅读源码了哈哈。开始总会有点困难，第一次读一脸懵逼，第二次读二脸懵逼，第三次读有点懵逼，第四次读这b牛逼～。只要坚持下多写点测试用例慢慢理解就好了，加油！
