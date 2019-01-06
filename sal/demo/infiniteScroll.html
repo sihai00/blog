@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>lazyLoad</title>
+  <style>
+    html, body{
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    h1{
+      border-bottom: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="list"></div>
+    <div class="bottom">加载更多</div>
+  </div>
+</body>
+<script>
+var num = 0
+var skip = 10
+var threshold = 0.9
+
+function load(){
+  var list = document.querySelector('.list')
+  var fragment = document.createDocumentFragment();
+  
+  Array(skip).fill().forEach((v, i) => {
+    var dom = document.createElement('h1')
+    num += 1
+    dom.innerText = num
+    fragment.append(dom)
+  })
+
+  list.append(fragment) 
+}
+
+var onIntersection = (changes, observer) => {
+  changes.forEach(function(change) {
+    if (change.intersectionRatio > threshold) load()
+  })
+}
+
+var observer = new IntersectionObserver(onIntersection, {threshold})
+
+observer.observe(document.querySelector('.bottom'))
+</script>
+</html>

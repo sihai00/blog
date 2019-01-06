@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>lazyLoad</title>
+  <style>
+    html, body{
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    .block{
+      width: 100%;
+      height: 700px;
+    }
+    .red{
+      background-color: red;
+    }
+    .green{
+      background-color: green;
+    }
+    .yellow{
+      background-color: yellow;
+    }
+    img{
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="block red"></div>
+  <div class="block green"></div>
+  <div class="block yellow"></div>
+</body>
+<script>
+var threshold = 0.3
+
+var onIntersection = (changes, observer) => {
+  changes.forEach(function(change) {
+    var container = change.target
+    
+    if (change.intersectionRatio > threshold) {
+      var img = new Image()
+      img.src = './fafa.jpeg'
+      container.append(img)
+      observer.unobserve(container)
+    }
+  })
+}
+
+var observer = new IntersectionObserver(onIntersection, {threshold})
+
+document.querySelectorAll('.block').forEach(element => observer.observe(element))
+</script>
+</html>
