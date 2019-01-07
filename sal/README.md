@@ -1,4 +1,4 @@
-# sal源码解析-轻量级的滚动动画库
+# sal源码解析-轻量级的滚动动画库
 > `sal`是以性能为中心，轻量级的滚动动画库
 
 ## 1.前言
@@ -34,17 +34,17 @@
 当页面开始滚动时，为标签添加了data-sal属性的标签就会随着滚动展示动画效果。
 
 data-sal有三种选项：
--. data-sal-duration - 动画时长；
--. data-sal-delay - 动画延迟时间；
--. data-sal-easing - 动画速度曲线。
+* data-sal-duration - 动画时长；
+* data-sal-delay - 动画延迟时间；
+* data-sal-easing - 动画速度曲线。
 
 sal函数接收三个参数：
--. threshold - 目标元素的可见比例
--. once - 只执行一次动画
--. disable - 禁用动画
+* threshold - 目标元素的可见比例
+* once - 只执行一次动画
+* disable - 禁用动画
 
 ## 3.解析
-库的原理是通过IntersectionObserver的api，观察目标元素的可见比例，通过添加或者移除class来启动动画
+库的原理是通过`IntersectionObserver`的`api`，观察目标元素的可见比例，通过添加或者移除`class`来启动动画
 ```javascript
 import './sal.scss';
 
@@ -139,7 +139,7 @@ const onIntersection = (entries, observer) => {
 };
 
 /**
- * Disable sal
+ * 禁用sal
  */
 const disable = () => {
   disableAnimations();
@@ -339,6 +339,6 @@ observer.observe(document.querySelector('.bottom'))
 ```
 
 ## 5.总结
-`sal`这个库其实主要是对`IntersectionObserver`的应用，代码简单仅仅只有一百多行，但由于`IntersectionObserver`还只是个试验阶段的api（虽然chrome支持了），在实际项目中运用的机会不是太大，但是对它抱有期待。就如无限滚动的例子，如果不使用`IntersectionObserver`的话，就得监听浏览器滚动事件，获取列表高度、窗口高度和滚动高度来计算是否滚动到底部，必要情况下还需要加上防抖动来优化用户体验，所以`IntersectionObserver`还是省去很多步骤的，看好！
+`sal`这个库其实主要是对`IntersectionObserver`的应用，代码简单仅仅只有一百多行，但由于`IntersectionObserver`还只是个实验阶段的api（虽然`chrome`支持了），在实际项目中运用的机会不是太大，但是对它抱有期待。就如无限滚动的例子，如果不使用`IntersectionObserver`的话，就得监听浏览器滚动事件，获取列表高度、窗口高度和滚动高度来计算是否滚动到底部，必要情况下还需要加上防抖动来优化用户体验，所以`IntersectionObserver`还是省去很多步骤的，看好！
 
 转眼就到了2019年了，要坚持分享输出！
