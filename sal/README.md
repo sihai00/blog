@@ -31,17 +31,17 @@
 </script>
 </html>
 ```
-当页面开始滚动时，为标签添加了data-sal属性的标签就会随着滚动展示动画效果。
+当页面开始滚动时，为标签添加了`data-sal`属性的标签就会随着滚动展示动画效果。
 
-data-sal有三种选项：
-* data-sal-duration - 动画时长；
-* data-sal-delay - 动画延迟时间；
-* data-sal-easing - 动画速度曲线。
+`data-sal`有三种选项：
+* `data-sal-duration` - 动画时长；
+* `data-sal-delay` - 动画延迟时间；
+* `data-sal-easing` - 动画速度曲线。
 
-sal函数接收三个参数：
-* threshold - 目标元素的可见比例
-* once - 只执行一次动画
-* disable - 禁用动画
+`sal`函数接收三个参数：
+* `threshold`- 目标元素的可见比例
+* `once` - 只执行一次动画
+* `disable` - 禁用动画
 
 ## 3.解析
 库的原理是通过`IntersectionObserver`的`api`，观察目标元素的可见比例，通过添加或者移除`class`来启动动画
