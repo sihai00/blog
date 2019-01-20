@@ -2,7 +2,7 @@
 效果如其名，想必都见过下雪（可能南方人除外哈哈），但下雪效果只是一类的名称，可以是红包雨等一些自由落体的运动效果，本文就是用纯`css`模拟下雪的效果。
 
 ## 1.前言
-由于公司产品的活动，需要模拟类似下雪的效果。浏览器实现动画无非`css3`和`canvas`（还有`gif`），对比下`css3`和`canvas`的优缺点：
+由于公司产品的活动，需要模拟类似下雪的效果。浏览器实现动画无非`css3`和`canvas`（还有`gif`），对比下`css3`和`canvas`的优缺点：
 1. 动画自由度：`canvas`胜；
 2. 复杂度：`canvas`胜；
 3. 兼容性：`canvas`胜；
@@ -11,8 +11,8 @@
 由于流量较大对于性能有一定的要求，`canvas`对比`css3`会有更多的计算量导致性能可能不太好，所以选用`css3`模拟下雪效果（ps：能用`css`解决的问题就不用`javascript`解决哈哈）。
 
 **附上地址** 
-[下雪效果Github代码](https://github.com/sihai00/blog/tree/master/fallSnow)
-[下雪效果codepen](https://codepen.io/sihai00/pen/EGqpXp)
+* [下雪效果Github代码](https://github.com/sihai00/blog/tree/master/fallSnow)
+* [下雪效果codepen](https://codepen.io/sihai00/pen/EGqpXp)
 
 ## 2.原理
 本文所采用的是`css3`的`animation`。为`dom`元素添加`animation`属性就可以模拟动画，例如w3school的例子：
@@ -213,4 +213,5 @@ timing(){
 
 ## 6.总结
 > 张鑫旭的鑫三无准则：无宽度、无图片和无浮动
+
 我个人觉得如果非要加上第四无，可以是 **无`js`** 哈哈（开玩笑）。随着`css`的发展，其领域可谓很广很深并且也不可或缺，很多时候如果`css`运用的比较好的话，会节省很多时间和`js`代码的，整个功能实现的难度都会下降，互勉互勉。
