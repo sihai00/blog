@@ -18,25 +18,6 @@ var twoSum = function(nums, target) {
 };
 
 /**
- * 167.Two Sum II - Input array is sorted
- * @param {number[]} numbers
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function(numbers, target) {
-  var obj = {}
-
-  for(var i = 0; i < numbers.length; i ++) {
-    if  ((target - numbers[i]) in obj){
-      return [obj[target - numbers[i]] + 1, i + 1]
-    }
-    obj[numbers[i]] = i
-  }
-
-  return null
-};
-
-/**
  * 15.3Sum
  * @param {number[]} nums
  * @return {number[][]}
