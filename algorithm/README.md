@@ -41,6 +41,25 @@
 |:---:|:---:|:---:|
 | 56 | [Merge Intervals](https://leetcode.com/problems/merge-intervals) | medium | 
 | 57 | [Insert Interval](https://leetcode.com/problems/insert-interval) | hard | 
-| 252 | [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) | easy | 
-| 253 | [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) | medium | 
-| 352 | [Data Stream as Disjoint Intervals](https://leetcode.com/problems/data-stream-as-disjoint-intervals/) | hard | 
+
+### 1.3 子数组类题目
+这类题目通常会在一个包含多个子数组的数组中，求和/积，最大最小等。
+
+解法：
+| 方法 | 说明 | 解题 | 
+|:---:|:---:|:---:|
+| 滑动窗口 | 给定两个指针，按条件控制指针的进退 | [滑动窗口解法](subArray.md)] |
+
+题目：
+| 序号 | 题目 | 难度 | 
+|:---:|:---:|:---:|
+| 53 | [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) | easy | 
+| 78 | [Subsets](https://leetcode.com/problems/subsets/) | medium | 
+| 90 | [Subsets II](https://leetcode.com/problems/subsets-ii/) | medium | 
+| 128 | [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence) | hard | 
+| 152 | [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) | medium | 
+| 209 | [Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/) | medium | 
+| 228 | [Summary Ranges](https://leetcode.com/problems/summary-ranges/) | medium | 
+| 238 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | medium | 
+| 239 | [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | hard | 
+| 295 | [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) | hard | 
