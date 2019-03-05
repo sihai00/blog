@@ -19,6 +19,38 @@ var maxSubArray = function(nums) {
 };
 
 /**
+ * 78.Subsets
+ * Input: nums = [1,2,3]
+ * Output:
+ * [
+ *   [3],
+ *   [1],
+ *   [2],
+ *   [1,2,3],
+ *   [1,3],
+ *   [2,3],
+ *   [1,2],
+ *   []
+ * ]
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function(nums) {
+  const sets = [[]];
+	
+	for(let number of nums) {
+		let setLength = sets.length;
+		for(let i = 0; i < setLength; i++) {
+			const setToAdd = sets[i].slice();
+			setToAdd.push(number);
+			sets.push(setToAdd);
+		}
+	}
+	
+	return sets;
+};
+
+/**
  * 209.Minimum Size Subarray Sum
  * Input: s = 7, nums = [2,3,1,2,4,3]
  * Output: 2
