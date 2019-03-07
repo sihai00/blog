@@ -15,20 +15,11 @@
 这类题目通常会给定一个数组和一个值，让求出这个数组中两个/三个/K个值的和等于这个给定的值target
 
 解法：
-方法 | 说明 | 解题 
------------- | -------------
-暴力解法 | 最常见，但是通常会超时 | 无 
-hash-map | 建立一个hash-map循环遍历一次 | [hash-map解法](K-Sum-1.md)] 
-two-pointers | 定位两个指针根据和的大小来移动另外一个。这里设定的指针个数根据题目中K的个数来定。3Sum中可以设定3个指针，固定两个，移动另一个 | [two-pointers解法](K-Sum-2.md) 
-
-| 标题 | 地址 | 类型 | 功能 |
-|:---:|:---:|:---:|:---:|
-| [web-mobile-cli简易教程](https://github.com/sihai00/web-mobile-cli) | [链接](web-mobile-cli简易教程) | 工具 | 脚手架 |
-| [clipboard.js](https://github.com/zenorocha/clipboard.js) | [链接](analysis/clipboard/) | 源码 | 复制 |
-| [history](https://github.com/ReactTraining/history) | [链接](analysis/history/) | 源码 | 历史记录 |
-| [sal](https://github.com/mciastek/sal) | [链接](sal) | 工具 | 滚动动画库 |
-| [fallSnow](https://codepen.io/sihai00/pen/EGqpXp) | [链接](fallSnow) | 组件 | 下雪效果 |
-| leetcode算法题 | [链接](algorithm) | 算法 | 算法题 |
+| 方法 | 说明 | 解题 |
+|:---:|:---:|:---:|
+| 暴力解法 | 最常见，但是通常会超时 | 无 |
+| hash-map| 建立一个hash-map循环遍历一次 | [hash-map解法](K-Sum-1.md) |
+| two-pointers | 定位两个指针根据和的大小来移动另外一个。这里设定的指针个数根据题目中K的个数来定。3Sum中可以设定3个指针，固定两个，移动另一个 | [two-pointers解法](K-Sum-2.md) |
 
 题目：
 | 序号 | 题目 | 难度 | 
