@@ -37,7 +37,7 @@ var maxSubArray = function(nums) {
  */
 var subsets = function(nums) {
   var arr = [[]];
-	
+
   for(var i = 0; i < nums.length; i++) {
     var len = arr.length
     for(var j = 0; j < len; j++) {
@@ -46,7 +46,7 @@ var subsets = function(nums) {
       arr.push(add)
     }
   }
-	
+
 	return arr;
 };
 
@@ -128,6 +128,31 @@ var longestConsecutive = function(nums) {
   return Math.max(max, result)
 };
 
+/**
+ * 152.Maximum Product Subarray
+ * Input: [2,3,-2,4]
+ * Output: 6
+ * Explanation: [2,3] has the largest product 6.
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxProduct = function(nums) {
+  var ans = -Infinity
+    , res = 1
+    , tmp = 1;
+
+  nums.forEach(function(item) {
+    var _res = res * item
+      , _tmp = tmp * item;
+
+    ans = Math.max(ans, _res, _tmp);
+
+    res = Math.max(_res, _tmp, 1);
+    tmp = Math.min(_res, _tmp, 1);
+  });
+
+  return ans;
+};
 /**
  * 209.Minimum Size Subarray Sum
  * Input: s = 7, nums = [2,3,1,2,4,3]
