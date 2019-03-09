@@ -5,7 +5,7 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var sortColors = function(nums) {
+var 75 = function(nums) {
   var index = 0
   var count = Array(3).fill(0)
 
@@ -28,5 +28,28 @@ var sortColors = function(nums) {
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var sortColors = function(nums) {
-  
+  // nums[0...zero] = 0
+  var zero = -1
+  // nums[two...n-1] = 2
+  var two = nums.length
+
+  for (var i = 0; i < two; ) {
+    if (nums[i] === 1) {
+      i++
+    } else if(nums[i] === 2) {
+      two--
+      nums = swap(nums, i, two)
+    } else if(nums[i] === 0){
+      zero++
+      nums = swap(nums, i, zero)
+      i++
+    }
+  }
 };
+
+var swap = function(arr, a, b){
+  var temp = arr[a]
+  arr[a] = arr[b]
+  arr[b] = temp
+  return arr
+}

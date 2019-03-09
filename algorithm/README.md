@@ -11,4 +11,6 @@
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|
-| 75 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | easy | [javascript](sortColors.js)
+| 75 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | easy | [javascript](75sortColors.js)
+| 88 | [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | easy | [javascript](88merge.js)
+| 215 | [Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) | medium | [javascript](215findKthLargest.js)
