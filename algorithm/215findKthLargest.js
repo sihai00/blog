@@ -49,3 +49,43 @@ function swap(arr, a, b) {
   arr[a] = arr[b];
   arr[b] = temp;
 }
+
+/**
+ * 随机数快速排序
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+function quickSort(nums){
+  _quickSort(nums, 0, nums.length - 1)
+}
+function _quickSort(arr, l, r){
+  if (l >= r) return
+
+  var p = _partition(arr, l, r)
+  _quickSort(arr, l, p - 1)
+  _quickSort(arr, p + 1, r)
+}
+function _partition(arr, l, r){
+  var range = random(l, r)
+  swap(arr, l, range)
+  var v = arr[l]
+  var j = l
+
+  for(var i = l + 1; i <= r; i++) {
+    if (arr[i] < v) {
+      swap(arr, ++j, i)
+    }
+  }
+
+  swap(arr, l, j)
+
+  return j
+}
+function swap(arr, a, b) {
+  let temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+function random(a, b){
+  return (Math.random() * (b - a + 1) + a) >> 0
+}
