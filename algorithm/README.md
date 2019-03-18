@@ -25,3 +25,15 @@
 | 344 | [Reverse String](https://leetcode.com/problems/reverse-string/) | easy | [javascript](344reverseString.js)
 | 345 | [Reverse Vowels of a String](https://leetcode.com/problems/reverse-vowels-of-a-string/) | easy | [javascript](345reverseVowels.js)
 | 438 | [Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | easy | [javascript](438findAnagrams.js)
+
+## 二：查找
+
+### 方法
+| 方法 | 说明 | 题目 |
+|:---:|:---:|:---:|
+| set | 使用set数据结构 | 349 |
+
+### 题目
+| 序号 | 题目 | 难度 | 解题
+|:---:|:---:|:---:|
+| 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
