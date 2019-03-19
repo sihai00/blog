@@ -32,8 +32,9 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | set | 使用set数据结构 | 349 |
-
+| map | 使用map数据结构 | 350 |
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|
 | 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
+| 350 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | easy | [javascript](350intersect.js)

@@ -22,6 +22,6 @@ var intersection = function(nums1, nums2) {
       resultSet.add(nums2[i])
     }
   }
-  
+
   return [...resultSet]
 };
