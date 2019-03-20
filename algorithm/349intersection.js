@@ -25,3 +25,22 @@ var intersection = function(nums1, nums2) {
 
   return [...resultSet]
 };
+
+// 哈希表
+var intersection = function(nums1, nums2) {
+  var record = {}
+  for (var i = 0; i < nums1.length; i++) {
+    if (!record[nums1[i]]) {
+      record[nums1[i]] = 1
+    }
+  }
+
+  var resultSet = {}
+  for(var j = 0; j < nums2.length; j++){
+    if (record[nums2[j]]){
+      resultSet[nums2[j]] = 1
+    }
+  }
+
+  return Object.keys(resultSet)
+};
