@@ -38,5 +38,6 @@
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|
+| 242 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | easy | [javascript](242isAnagram.js)
 | 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
 | 350 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | easy | [javascript](350intersect.js)
