@@ -12,7 +12,7 @@
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
-|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|
 | 3 | [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | medium | [javascript](3lengthOfLongestSubstring.js)
 | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | medium | [javascript](11maxArea.js)
 | 75 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | easy | [javascript](75sortColors.js)
@@ -37,7 +37,9 @@
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
-|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|
+| 202 | [Happy Number](https://leetcode.com/problems/happy-number/) | easy | [javascript](202isHappy.js)
 | 242 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | easy | [javascript](242isAnagram.js)
+| 290 | [Word Pattern](https://leetcode.com/problems/word-pattern/) | easy | [javascript](290wordPattern.js)
 | 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
 | 350 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | easy | [javascript](350intersect.js)
