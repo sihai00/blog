@@ -39,6 +39,7 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 202 | [Happy Number](https://leetcode.com/problems/happy-number/) | easy | [javascript](202isHappy.js)
+| 205 | [Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | easy | [javascript](205isIsomorphic.js)
 | 242 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | easy | [javascript](242isAnagram.js)
 | 290 | [Word Pattern](https://leetcode.com/problems/word-pattern/) | easy | [javascript](290wordPattern.js)
 | 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
