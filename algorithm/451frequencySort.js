@@ -44,8 +44,8 @@ var frequencySort = function(s) {
     hash[s[i]] = ~~hash[s[i]] + 1
   }
 
-  return Object.key(hash)
+  return Object.keys(hash)
     .map(v => v.repeat(hash[v]))
-    .sort((a, b) => a.length - b.length)
+    .sort((a, b) => b.length - a.length)
     .join('')
 };
