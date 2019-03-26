@@ -7,7 +7,7 @@
 |:---:|:---:|:---:|
 | 计数快排 | 计算数组中的元素，然后组合数组 | 75 |
 | 三路快排 | 利用三路快排的思路解题 | 75、88、215 |
-| 对撞指针 | 有序数组，最左指针和最右指针向中间移动 | 167、125、344、345、11 |
+| 对撞指针 | 有序数组，最左指针和最右指针向中间移动 | 167、125、344、345、11、15、18、16 |
 | 滑动窗口 | 两个指针，两个指针相同方向移动 | 209、3、438、76 |
 
 ### 题目
@@ -15,6 +15,9 @@
 |:---:|:---:|:---:|:---:|
 | 3 | [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | medium | [javascript](3lengthOfLongestSubstring.js)
 | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | medium | [javascript](11maxArea.js)
+| 15 | [3Sum](https://leetcode.com/problems/3sum/) | medium | [javascript](15threeSum.js)
+| 16 | [3Sum Closest](https://leetcode.com/problems/3sum-closest/) | medium | [javascript](16threeSumClosest.js)
+| 18 | [4Sum](https://leetcode.com/problems/4sum/) | medium | [javascript](18fourSum.js)
 | 75 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | easy | [javascript](75sortColors.js)
 | 76 | [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | hard | [javascript](76minWindow.js)
 | 88 | [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | easy | [javascript](88merge.js)
@@ -32,7 +35,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | set | 使用set数据结构 | 349 |
-| 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1、15、18、16 |
+| 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
