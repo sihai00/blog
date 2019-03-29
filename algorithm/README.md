@@ -35,7 +35,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | set | 使用set数据结构 | 349 |
-| 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1、454、49 |
+| 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1、454、49、447、149 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -48,5 +48,6 @@
 | 290 | [Word Pattern](https://leetcode.com/problems/word-pattern/) | easy | [javascript](290wordPattern.js)
 | 349 | [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) | easy | [javascript](349intersection.js)
 | 350 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | easy | [javascript](350intersect.js)
+| 447 | [Number of Boomerangs](https://leetcode.com/problems/number-of-boomerangs/) | easy | [javascript](447numberOfBoomerangs.js)
 | 451 | [Sort Characters By Frequency](https://leetcode.com/problems/sort-characters-by-frequency/) | medium | [javascript](451frequencySort.js)
 | 454 | [4Sum II](https://leetcode.com/problems/4sum-ii/) | medium | [javascript](454fourSumCount.js)
