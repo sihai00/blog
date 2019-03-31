@@ -34,7 +34,7 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| set | 使用set数据结构 | 349 |
+| set | 使用set数据结构 | 349、217 |
 | 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1、454、49、447 |
 | 滑动窗口 + 查找表 | 结合滑动窗口和set数据结构 | 219 |
 
@@ -45,6 +45,7 @@
 | 49 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/) | medium | [javascript](49groupAnagrams.js)
 | 202 | [Happy Number](https://leetcode.com/problems/happy-number/) | easy | [javascript](202isHappy.js)
 | 205 | [Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | easy | [javascript](205isIsomorphic.js)
+| 217 | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | easy | [javascript](217containsDuplicate.js)
 | 219 | [Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | easy | [javascript](219containsNearbyDuplicate.js)
 | 242 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | easy | [javascript](242isAnagram.js)
 | 290 | [Word Pattern](https://leetcode.com/problems/word-pattern/) | easy | [javascript](290wordPattern.js)
