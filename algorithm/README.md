@@ -61,9 +61,10 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 链表 | 用前中后三个指针反转链表 | 206、92|
+| 链表 | 用前中后三个指针反转链表 | 206、92 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
+| 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/) | medium | [javascript](92reverseBetween.js)
 | 206 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | easy | [javascript](206reverseList.js)
