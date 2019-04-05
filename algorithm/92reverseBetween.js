@@ -17,22 +17,21 @@
  * @return {ListNode}
  */
 function reverseBetween(head, m, n) {
-  const before = new ListNode();
-  let prev = before;
-  prev.next = head;
+  var before = new ListNode()
+  var pre = before
 
-  while (--m) {
-    prev = prev.next;
-    --n;
+  while(--m) {
+    pre = pre.next
+    --n
   }
 
-  let curr = prev.next;
-  while (--n) {
-    let next = curr.next;
-    curr.next = next.next;
-    next.next = prev.next;
-    prev.next = next;
+  var cur = pre.next
+  while(--n) {
+    var next = cur.next
+    cur.next = next.next
+    next.next = pre.next
+    pre.next = next
   }
 
-  return before.next;
+  return before.next
 }
