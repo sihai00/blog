@@ -19,6 +19,7 @@
 function reverseBetween(head, m, n) {
   var before = new ListNode()
   var pre = before
+  pre.next = head
 
   while(--m) {
     pre = pre.next
