@@ -68,5 +68,6 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 83 | [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | esay | [javascript](83deleteDuplicates.js)
+| 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
 | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/) | medium | [javascript](92reverseBetween.js)
 | 206 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | easy | [javascript](206reverseList.js)
