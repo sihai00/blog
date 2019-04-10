@@ -63,6 +63,7 @@
 |:---:|:---:|:---:|
 | 链表 | 用前中后三个指针反转链表 | 206、92 |
 | 链表 | 基础操作 | 83、86、328、2 |
+| 链表 | 删除 | 203、82、21 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -72,4 +73,5 @@
 | 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
 | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/) | medium | [javascript](92reverseBetween.js)
 | 206 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | easy | [javascript](206reverseList.js)
+| 203 | [Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/) | easy | [javascript](203removeElements.js)
 | 328 | [Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/) | medium | [javascript](328oddEvenList.js)
