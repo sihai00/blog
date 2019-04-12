@@ -69,6 +69,7 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 2 | [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | medium | [javascript](2addTwoNumbers.js)
+| 21 | [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) | easy | [javascript](21mergeTwoLists.js)
 | 82 | [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | medium | [javascript](82deleteDuplicates.js)
 | 83 | [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | esay | [javascript](83deleteDuplicates.js)
 | 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
