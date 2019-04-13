@@ -62,14 +62,16 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 链表 | 用前中后三个指针反转链表 | 206、92 |
-| 链表 | 基础操作 | 83、86、328、2 |
-| 链表 | 删除 | 203、82、21 |
+| 链表 | 给两个链表的题目 | 86、328、2、21 |
+| 链表 | 删除 | 83、203、82 |
+| 链表 | 深点的题目 | 24、25、147、148 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 2 | [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | medium | [javascript](2addTwoNumbers.js)
 | 21 | [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) | easy | [javascript](21mergeTwoLists.js)
+| 24 | [Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/) | medium | [javascript](24swapPairs.js)
 | 82 | [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | medium | [javascript](82deleteDuplicates.js)
 | 83 | [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | esay | [javascript](83deleteDuplicates.js)
 | 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
