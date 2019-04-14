@@ -20,12 +20,12 @@ var swapPairs = function(head) {
 
   while(cur.next && cur.next.next) {
     var node1 = cur.next
-    var node2 = cur.next.next
+    var node2 = node1.next
     var next = node2.next
 
     node2.next = node1
     node1.next = next
-    cur.next = node1
+    cur.next = node2
 
     cur = node1
   }
