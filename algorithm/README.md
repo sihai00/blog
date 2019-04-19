@@ -75,6 +75,7 @@
 | 19 | [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | medium | [javascript](19removeNthFromEnd.js)
 | 21 | [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) | easy | [javascript](21mergeTwoLists.js)
 | 24 | [Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/) | medium | [javascript](24swapPairs.js)
+| 61 | [Rotate List](https://leetcode.com/problems/rotate-list/) | medium | [javascript](61rotateRight.js)
 | 82 | [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | medium | [javascript](82deleteDuplicates.js)
 | 83 | [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | esay | [javascript](83deleteDuplicates.js)
 | 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
