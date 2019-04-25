@@ -14,5 +14,37 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-  
+  if (!tokens) return 0
+
+  var res = []
+  var a = 0
+  var b = 0
+  for (var i = 0; i < tokens.length; i++) {
+    switch (tokens[i]) {
+      case '+':
+        b = res.pop()
+        a = res.pop()
+        res.push(a + b)
+        break
+      case '-':
+        b = res.pop()
+        a = res.pop()
+        res.push(a - b)
+        break
+      case '*':
+        b = res.pop()
+        a = res.pop()
+        res.push(a * b)
+        break
+      case '/':
+        b = res.pop()
+        a = res.pop()
+        res.push(parseInt(a / b))
+        break
+      default:
+        res.push(parseInt(tokens[i]))
+    }
+  }
+
+  return res.pop()
 };
