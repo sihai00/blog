@@ -61,6 +61,7 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
+| 链表 | 基础 | 144、94、145 |
 | 链表 | 用前中后三个指针反转链表 | 206、92 |
 | 链表 | 给两个链表的题目 | 86、328、2、21 |
 | 链表 | 删除 | 83、203、82 |
@@ -80,7 +81,10 @@
 | 83 | [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | esay | [javascript](83deleteDuplicates.js)
 | 86 | [Partition List](https://leetcode.com/problems/partition-list/) | medium | [javascript](86partition.js)
 | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/) | medium | [javascript](92reverseBetween.js)
+| 94 | [Binary Tree Inorder Traversal（中序遍历）](https://leetcode.com/problems/binary-tree-inorder-traversal/) | medium | [javascript](94inorderTraversal.js)
 | 143 | [Reorder List](https://leetcode.com/problems/reorder-list/) | medium | [javascript](143reorderList.js)
+| 144 | [Binary Tree Preorder Traversal（前序遍历）](https://leetcode.com/problems/binary-tree-preorder-traversal/) | medium | [javascript](144preorderTraversal.js)
+| 145 | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
 | 147 | [Insertion Sort List](https://leetcode.com/problems/insertion-sort-list/) | medium | [javascript](147insertionSortList.js)
 | 148 | [Sort List](https://leetcode.com/problems/sort-list/) | medium | [javascript](148sortList.js)
 | 206 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | easy | [javascript](206reverseList.js)
