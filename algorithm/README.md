@@ -98,7 +98,7 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 栈 | 后进先出 | 20、150、71、144、94、145 |
+| 栈 | 后进先出 | 20、150、71、144、94、145、341 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -109,3 +109,4 @@
 | 144 | [Binary Tree Preorder Traversal（前序遍历）](https://leetcode.com/problems/binary-tree-preorder-traversal/) | medium | [javascript](144preorderTraversal.js)
 | 145 | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
 | 150 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | medium | [javascript](150evalRPN.js)
+| 341 | [Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/) | medium | [javascript](341NestedIterator.js)
