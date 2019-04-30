@@ -99,6 +99,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 栈 | 后进先出 | 20、150、71、144、94、145、341 |
+| 队列 | 先进先出 | 102 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -106,6 +107,7 @@
 | 20 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | easy | [javascript](20isValid.js)
 | 71 | [Simplify Path](https://leetcode.com/problems/simplify-path/) | medium | [javascript](71simplifyPath.js)
 | 94 | [Binary Tree Inorder Traversal（中序遍历）](https://leetcode.com/problems/binary-tree-inorder-traversal/) | medium | [javascript](94inorderTraversal.js)
+| 102 | [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | medium | [javascript](102levelOrder.js)
 | 144 | [Binary Tree Preorder Traversal（前序遍历）](https://leetcode.com/problems/binary-tree-preorder-traversal/) | medium | [javascript](144preorderTraversal.js)
 | 145 | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
 | 150 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | medium | [javascript](150evalRPN.js)
