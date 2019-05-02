@@ -1,11 +1,11 @@
 /**
- * 107. Binary Tree Level Order Traversal II
+ * 103. Binary Tree Zigzag Level Order Traversal
  *
  * [3,9,20,null,null,15,7]
  * [
- *   [15,7],
- *   [9,20],
- *   [3]
+ *   [3],
+ *   [20,9],
+ *   [15,7]
  * ]
  *
  * Definition for a binary tree node.
@@ -18,9 +18,8 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrderBottom = function(root) {
+var zigzagLevelOrder = function(root) {
   if (!root) return []
-
   var res = []
   var queue = [{node: root, level: 0}]
 
@@ -29,7 +28,11 @@ var levelOrderBottom = function(root) {
     var level = head.level
 
     if (res[level]) {
-      res[level].push(head.node.val)
+      if (level % 2 === 0) {
+        res[level].push(head.node.val)
+      } else {
+        res[level].unshift(head.node.val)
+      }
     } else {
       res[level] = [head.node.val]
     }
@@ -38,27 +41,32 @@ var levelOrderBottom = function(root) {
     if (head.node.right) queue.push({node: head.node.right, level: level + 1})
   }
 
-  return res.reverse()
+  return res
 };
 
-var levelOrderBottom = function(root) {
+var zigzagLevelOrder = function(root) {
+  var queue = [root]
+  var res = []
+  var direction = true
+
   if (!root) return []
 
-  var res = []
-  var queue = [root]
-
-  while(queue.length) {
-    var item = []
-
+  while(queue.length){
+    var val = []
     for (var i = 0, len = queue.length; i < len; i++) {
       var head = queue.shift()
+      if (direction) {
+        val.push(head.val)
+      }else{
+        val.unshift(head.val)
+      }
 
-      item.push(head.val)
       if (head.left) queue.push(head.left)
       if (head.right) queue.push(head.right)
     }
 
-    res.unshift(item)
+    res.push(val)
+    direction = !direction
   }
 
   return res
