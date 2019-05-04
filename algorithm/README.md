@@ -100,6 +100,8 @@
 |:---:|:---:|:---:|
 | 栈 | 后进先出 | 20、150、71、144、94、145、341 |
 | 队列 | 先进先出 | 102、107、103、199 |
+| 优先队列 | 先进先出 | 347 |
+| 图 | BFS和图的最短路径 | 279、127、126 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -114,4 +116,6 @@
 | 145 | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
 | 150 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | medium | [javascript](150evalRPN.js)
 | 199 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | medium | [javascript](199rightSideView.js)
+| 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 341 | [Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/) | medium | [javascript](341NestedIterator.js)
+| 347 | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | medium | [javascript](347topKFrequent.js)

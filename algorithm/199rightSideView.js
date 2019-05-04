@@ -15,12 +15,33 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
+
+var rightSideView = function(root) {
+  if (!root) return []
+  var res = []
+  var queue = [{node: root, level: 0}]
+
+  while(queue.length) {
+    var head = queue.shift()
+    var level = head.level
+
+    if (!res[level]) {
+      res[level] = head.node.val
+    }
+
+    if (head.node.right) queue.push({node: head.node.right, level: level + 1})
+    if (head.node.left) queue.push({node: head.node.left, level: level + 1})
+  }
+
+  return res
+};
+
 var rightSideView = function(root) {
   if (!root) return []
 
   var res = []
   var queue = [root]
-  
+
   while(queue.length) {
     var item = []
 
