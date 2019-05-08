@@ -48,7 +48,6 @@ var topKFrequent = function(nums, k) {
 var topKFrequent = function(nums, k) {
   var obj = {}
   var heap = new minHeap(k)
-  var res = []
 
   for (var i = 0; i < nums.length; i++) {
     var val = obj[nums[i]]
@@ -63,10 +62,18 @@ var topKFrequent = function(nums, k) {
       })
     }else{
       if (heap.data[1].num < obj[i]) {
-        let min = heap.extractMin()
-        res.push(min.num)
+        heap.extractMin()
+        heap.insert({
+          key: i,
+          num: obj[i]
+        })
       }
     }
+  }
+
+  var res = []
+  for (var i = 0, len = heap.size; i < len; i++) {
+    res.push(heap.extractMin().key)
   }
 
   return res
@@ -79,7 +86,7 @@ class minHeap {
     this.size = 0
   }
   _shiftUp(k){
-    while(k > 1 && this.data[k] < this.data[Math.floor(k / 2)]) {
+    while(k > 1 && this.data[k].num < this.data[Math.floor(k / 2)].num) {
       this.data = this.swap(this.data, Math.floor(k  / 2), k)
       k = Math.floor(k / 2)
     }
@@ -87,9 +94,9 @@ class minHeap {
   _shiftDown(k){
     while(2 * k <= this.size){
       let j = 2 * k
-      if (j + 1 <= this.size && this.data[j] > this.data[j + 1]) j = j + 1
+      if (j + 1 <= this.size && this.data[j].num > this.data[j + 1].num) j = j + 1
 
-      if (this.data[k] < this.data[j]) break
+      if (this.data[k].num < this.data[j].num) break
 
       this.data = this.swap(this.data, k, j)
       k = j
