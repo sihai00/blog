@@ -101,21 +101,23 @@
 | 栈 | 后进先出 | 20、150、71、144、94、145、341 |
 | 队列 | 先进先出 | 102、107、103、199 |
 | 优先队列（堆） | 先进先出 | 347 |
+| 归并 | 递归 | 23 |
 | 图 | BFS和图的最短路径 | 279、127、126 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 20 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | easy | [javascript](20isValid.js)
+| 23* | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | medium | [javascript](23mergeKLists.js)
 | 71 | [Simplify Path](https://leetcode.com/problems/simplify-path/) | medium | [javascript](71simplifyPath.js)
-| 94 | [Binary Tree Inorder Traversal（中序遍历）](https://leetcode.com/problems/binary-tree-inorder-traversal/) | medium | [javascript](94inorderTraversal.js)
+| 94* | [Binary Tree Inorder Traversal（中序遍历）](https://leetcode.com/problems/binary-tree-inorder-traversal/) | medium | [javascript](94inorderTraversal.js)
 | 102 | [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | medium | [javascript](102levelOrder.js)
 | 103 | [Binary Tree Zigzag Level Order Traversal](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/) | medium | [javascript](103zigzagLevelOrder.js)
 | 107 | [Binary Tree Level Order Traversal II](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/) | easy | [javascript](107levelOrderBottom.js)
-| 144 | [Binary Tree Preorder Traversal（前序遍历）](https://leetcode.com/problems/binary-tree-preorder-traversal/) | medium | [javascript](144preorderTraversal.js)
-| 145 | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
+| 144* | [Binary Tree Preorder Traversal（前序遍历）](https://leetcode.com/problems/binary-tree-preorder-traversal/) | medium | [javascript](144preorderTraversal.js)
+| 145* | [Binary Tree Postorder Traversal（后序遍历）](https://leetcode.com/problems/binary-tree-postorder-traversal/) | hard | [javascript](145postorderTraversal.js)
 | 150 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | medium | [javascript](150evalRPN.js)
 | 199 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | medium | [javascript](199rightSideView.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 341 | [Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/) | medium | [javascript](341NestedIterator.js)
-| 347 | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | medium | [javascript](347topKFrequent.js)
+| 347* | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | medium | [javascript](347topKFrequent.js)
