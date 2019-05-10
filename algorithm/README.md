@@ -101,7 +101,7 @@
 | 栈 | 后进先出 | 20、150、71、144、94、145、341 |
 | 队列 | 先进先出 | 102、107、103、199 |
 | 优先队列（堆） | 先进先出 | 347 |
-| 归并 | 递归 | 23 |
+
 | 图 | BFS和图的最短路径 | 279、127、126 |
 
 ### 题目
@@ -121,3 +121,18 @@
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 341 | [Flatten Nested List Iterator](https://leetcode.com/problems/flatten-nested-list-iterator/) | medium | [javascript](341NestedIterator.js)
 | 347* | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | medium | [javascript](347topKFrequent.js)
+
+## 五：二叉树和递归
+
+### 方法
+| 方法 | 说明 | 题目 |
+|:---:|:---:|:---:|
+| 归并 | 递归 | 104、111、226、23、100、101、222、110 |
+
+### 题目
+| 序号 | 题目 | 难度 | 解题
+|:---:|:---:|:---:|:---:|
+| 23* | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | medium | [javascript](23mergeKLists.js)
+| 104 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | easy | [javascript](104maxDepth.js)
+| 111 | [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | easy | [javascript](111minDepth.js)
+| 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
