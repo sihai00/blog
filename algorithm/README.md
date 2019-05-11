@@ -133,6 +133,7 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 23* | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | medium | [javascript](23mergeKLists.js)
+| 100 | [Same Tree](https://leetcode.com/problems/same-tree/) | esay | [javascript](100isSameTree.js)
 | 104 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | easy | [javascript](104maxDepth.js)
 | 111 | [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | easy | [javascript](111minDepth.js)
 | 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
