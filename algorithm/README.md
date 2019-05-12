@@ -94,6 +94,7 @@
 | 328 | [Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/) | medium | [javascript](328oddEvenList.js)
 
 ## 四：栈和队列
+堆：完全二叉树
 
 ### 方法
 | 方法 | 说明 | 题目 |
@@ -123,6 +124,8 @@
 | 347* | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | medium | [javascript](347topKFrequent.js)
 
 ## 五：二叉树和递归
+完全二叉树：除了最后一层，所有层的节点数达到最大，与此同时，最后一层的所有节点都在最左侧
+满二叉树：所有层的节点数达到最大
 
 ### 方法
 | 方法 | 说明 | 题目 |
@@ -134,6 +137,7 @@
 |:---:|:---:|:---:|:---:|
 | 23* | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | medium | [javascript](23mergeKLists.js)
 | 100 | [Same Tree](https://leetcode.com/problems/same-tree/) | esay | [javascript](100isSameTree.js)
+| 101 | [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/) | esay | [javascript](101isSymmetric.js)
 | 104 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | easy | [javascript](104maxDepth.js)
 | 111 | [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | easy | [javascript](111minDepth.js)
 | 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
