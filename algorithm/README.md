@@ -130,7 +130,7 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 归并 | 递归 | 104、111、226、23、100、101、222、110、112、404 |
+| 归并 | 递归 | 104、111、226、23、100、101、222、110、112、404、257、113、129 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -141,6 +141,7 @@
 | 104 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | easy | [javascript](104maxDepth.js)
 | 110 | [Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | easy | [javascript](110isBalanced.js)
 | 111 | [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | easy | [javascript](111minDepth.js)
+| 113 | [Path Sum II](https://leetcode.com/problems/path-sum-ii/) | medium | [javascript](113pathSum.js)
 | 112 | [Path Sum](https://leetcode.com/problems/path-sum/) | easy | [javascript](112hasPathSum.js)
 | 222 | [Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/) | medium | [javascript](222countNodes.js)
 | 257 | [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/) | easy | [javascript](257binaryTreePaths.js)
