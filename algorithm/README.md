@@ -143,6 +143,7 @@
 | 111 | [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | easy | [javascript](111minDepth.js)
 | 113 | [Path Sum II](https://leetcode.com/problems/path-sum-ii/) | medium | [javascript](113pathSum.js)
 | 112 | [Path Sum](https://leetcode.com/problems/path-sum/) | easy | [javascript](112hasPathSum.js)
+| 129 | [Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/) | medium | [javascript](129sumNumbers.js)
 | 222 | [Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/) | medium | [javascript](222countNodes.js)
 | 257 | [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/) | easy | [javascript](257binaryTreePaths.js)
 | 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
