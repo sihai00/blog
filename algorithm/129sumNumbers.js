@@ -42,3 +42,16 @@ function _sumNumbers(root){
 
   return res
 }
+
+var sumNumbers = function(root){
+  function dfs(root, preNum) {
+    if (root == null) return 0
+
+    var num = preNum * 10 + root.val
+    if (root.left == null && root.right == null) return num
+
+    return dfs(root.left, num) + dfs(root.right, num)
+  }
+
+  return dfs(root, 0)
+}

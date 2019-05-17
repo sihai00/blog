@@ -131,6 +131,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 归并 | 递归 | 104、111、226、23、100、101、222、110、112、404、257、113、129 |
+| 归并 | 嵌套递归 | 437 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -148,3 +149,4 @@
 | 257 | [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/) | easy | [javascript](257binaryTreePaths.js)
 | 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
 | 404 | [Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/) | easy | [javascript](404sumOfLeftLeaves.js)
+| 437 | [Path Sum III](https://leetcode.com/problems/path-sum-iii/) | easy | [javascript](437pathSum.js)
