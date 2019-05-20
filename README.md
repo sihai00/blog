@@ -10,3 +10,4 @@
 | [sal](https://github.com/mciastek/sal) | [链接](sal) | 工具 | 滚动动画库 |
 | [fallSnow](https://codepen.io/sihai00/pen/EGqpXp) | [链接](fallSnow) | 组件 | 下雪效果 |
 | leetcode算法题 | [链接](algorithm) | 算法 | 算法题 |
+| webpack构建多页应用 | [链接](webpack) | 工具 | 脚手架 |

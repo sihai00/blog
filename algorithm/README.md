@@ -126,17 +126,20 @@
 ## 五：二叉树和递归
 完全二叉树：除了最后一层，所有层的节点数达到最大，与此同时，最后一层的所有节点都在最左侧
 满二叉树：所有层的节点数达到最大
+二分搜索树：每个节点的键值大于左孩子，每个节点的键值小于右孩子
 
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 归并 | 递归 | 104、111、226、23、100、101、222、110、112、404、257、113、129 |
 | 归并 | 嵌套递归 | 437 |
+| 归并 | 二分搜索树 | 235、98、450、108、230、236 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 23* | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | medium | [javascript](23mergeKLists.js)
+| 98* | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | medium | [javascript](98isValidBST.js)
 | 100 | [Same Tree](https://leetcode.com/problems/same-tree/) | esay | [javascript](100isSameTree.js)
 | 101 | [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/) | esay | [javascript](101isSymmetric.js)
 | 104 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | easy | [javascript](104maxDepth.js)
@@ -146,7 +149,8 @@
 | 112 | [Path Sum](https://leetcode.com/problems/path-sum/) | easy | [javascript](112hasPathSum.js)
 | 129 | [Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/) | medium | [javascript](129sumNumbers.js)
 | 222 | [Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/) | medium | [javascript](222countNodes.js)
+| 235 | [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | esay | [javascript](235lowestCommonAncestor.js)
 | 257 | [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/) | easy | [javascript](257binaryTreePaths.js)
 | 226 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | easy | [javascript](226invertTree.js)
 | 404 | [Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/) | easy | [javascript](404sumOfLeftLeaves.js)
-| 437 | [Path Sum III](https://leetcode.com/problems/path-sum-iii/) | easy | [javascript](437pathSum.js)
+| 437* | [Path Sum III](https://leetcode.com/problems/path-sum-iii/) | easy | [javascript](437pathSum.js)
