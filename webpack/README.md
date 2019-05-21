@@ -235,4 +235,107 @@ module.exports = {
 	}
 }
 ```
-## 7.总结
+## 7.优化
+优化的目的是提高执行和打包的速度
+
+### 7.1 查找路径
+告诉`webpack`解析模块时应该搜索的目录，缩小编译范围，减少不必要的编译工作
+```javascript
+const {resolve} = require('path')
+
+module.exports = {
+  entry: {...},
+  module: {...},
+  plugins: [],
+  optimization: {...},
+  resolve: {
+		alias: {
+			'@': resolve(__dirname, '../src'),
+		},
+		modules: [
+			resolve('src'),
+			resolve('node_modules'),
+		]
+	}
+}
+```
+
+### 7.2 指定目录
+指定`loader`的`include`目录
+```javascript
+const {resolve} = require('path')
+
+module.exports = {
+  entry: {...},
+  module: {
+  	rules: [
+  		{
+				test: /\.css$/,
+				include: [
+					resolve("src"),
+				],
+				use: ['style-loader', 'css-loader']
+			}
+  	]
+  },
+  plugins: [],
+  optimization: {...},
+  resolve: {...}
+}
+```
+
+### 7.3 `babel`缓存目录
+[`babel-loader`](https://webpack.js.org/loaders/babel-loader/#options)开始缓存目录`cacheDirectory`
+```javascript
+const {resolve} = require('path')
+
+module.exports = {
+  entry: {...},
+  module: {
+  	rules: [
+  		{
+				test: /\.m?js$/,
+				exclude: /(node_modules|bower_components)/,
+				include: [
+					resolve("src"),
+				],
+				use: {
+					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true,
+						presets: ['@babel/preset-env'],
+						plugins: ['@babel/plugin-transform-runtime']
+					}
+				}
+			}
+  	]
+  },
+  plugins: [],
+  optimization: {...},
+  resolve: {...}
+}
+```
+
+### 7.4 插件`TerserJSPlugin`
+[`TerserJSPlugin`](https://webpack.docschina.org/plugins/terser-webpack-plugin/)插件的作用是压缩`JavaScript`，优化的地方是开启缓存目录和开启多线程
+```javascript
+const {resolve} = require('path')
+
+module.exports = {
+  entry: {...},
+  module: {...},
+  plugins: [],
+  optimization: {
+  	minimizer: [
+			new TerserJSPlugin({
+				parallel: true,
+				cache: true,
+			})
+		]
+  },
+  resolve: {...}
+}
+```
+
+## 8.总结
+通过这次学习`webpack`到升级脚手架，对前端工程化有了进一步的了解，也感受到了`webpack4`带来的开箱即用，挺方便的。下一步就是解析别人的脚手架了嘿嘿
