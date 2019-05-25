@@ -158,3 +158,15 @@
 | 404 | [Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/) | easy | [javascript](404sumOfLeftLeaves.js)
 | 437* | [Path Sum III](https://leetcode.com/problems/path-sum-iii/) | easy | [javascript](437pathSum.js)
 | 450 | [Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst/) | medium | [javascript](450deleteNode.js)
+
+## 六：递归和回溯
+
+### 方法
+| 方法 | 说明 | 题目 |
+|:---:|:---:|:---:|
+| 归并 | 递归 |  |
+
+### 题目
+| 序号 | 题目 | 难度 | 解题
+|:---:|:---:|:---:|:---:|
+| 17 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | medium | [javascript](17letterCombinations.js)
