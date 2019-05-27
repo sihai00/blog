@@ -164,9 +164,10 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 回溯 | 树形问题 | 17 |
+| 回溯 | 树形问题 | 17、93、131 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 17 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | medium | [javascript](17letterCombinations.js)
+| 93 | [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/) | medium | [javascript](93restoreIpAddresses.js)
