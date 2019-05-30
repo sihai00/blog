@@ -40,3 +40,24 @@ var permute = function(nums) {
 
   return res
 };
+
+var permute = function(nums) {
+  if (!nums || nums.length === 0) return []
+  var res = []
+
+  function helper(nums, path){
+    if (nums.length === 0) {
+      res.push(path)
+    }
+
+    var last = ''
+    for (var i = 0; i < nums.length; i++) {
+      last = nums[i]
+      helper(nums.slice(0, i).concat(nums.slice(i + 1)), path.concat([nums[i]]))
+    }
+  }
+
+  helper(nums, [])
+
+  return res
+};

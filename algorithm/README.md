@@ -172,5 +172,6 @@
 |:---:|:---:|:---:|:---:|
 | 17 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | medium | [javascript](17letterCombinations.js)
 | 46 | [Permutations](https://leetcode.com/problems/permutations/) | medium | [javascript](46permute.js)
+| 47 | [Permutations II](https://leetcode.com/problems/permutations-ii/) | medium | [javascript](47permuteUnique.js)
 | 93 | [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/) | medium | [javascript](93restoreIpAddresses.js)
 | 131 | [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | medium | [javascript](131partition.js)
