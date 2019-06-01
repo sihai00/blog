@@ -172,6 +172,8 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 17 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | medium | [javascript](17letterCombinations.js)
+| 39 | [Combination Sum](https://leetcode.com/problems/combination-sum/) | medium | [javascript](39combinationSum.js)
+| 40 | [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | medium | [javascript](40combinationSum2.js)
 | 46 | [Permutations](https://leetcode.com/problems/permutations/) | medium | [javascript](46permute.js)
 | 47 | [Permutations II](https://leetcode.com/problems/permutations-ii/) | medium | [javascript](47permuteUnique.js)
 | 77 | [Combinations](https://leetcode.com/problems/combinations/) | medium | [javascript](77combine.js)
