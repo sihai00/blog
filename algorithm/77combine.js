@@ -15,5 +15,21 @@
  * @return {number[][]}
  */
 var combine = function(n, k) {
-  
+  if (n === 0 || k === 0 || k > n) return []
+
+  var res = []
+
+  function helper(n, k, start, arr){
+    if (arr.length === k) {
+      res.push(arr)
+    }
+
+    for (var i = start; i <= n; i++) {
+      helper(n, k, i + 1, arr.concat([i]))
+    }
+  }
+
+  helper(n, k, 1, [])
+
+  return res
 };
