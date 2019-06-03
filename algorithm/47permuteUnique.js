@@ -20,6 +20,7 @@ var permuteUnique = function(nums) {
   function helper(nums, path){
     if (nums.length === 0) {
       res.push(path)
+      return
     }
 
     var last = ''
