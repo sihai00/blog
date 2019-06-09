@@ -18,7 +18,7 @@
 var exist = function(board, word) {
   var d = [[-1, 0], [0, 1], [1, 0], [0, -1]]
   var m, n
-  var visited = Array(board.length).fill([])
+  var visited = Array(board.length).fill(1).map(v => [])
 
   function inArea(x, y) {
     return x >= 0 && x < m && y >= 0 && y < n
@@ -38,8 +38,8 @@ var exist = function(board, word) {
         var newx = startx + d[i][0]
         var newy = starty + d[i][1]
 
-        if (inArea(newx, newy) && !visited[startx][starty]) {
-          return searchWord(board, word, index + 1, newx, newy)
+        if (inArea(newx, newy) && !visited[newx][newy] && searchWord(board, word, index + 1, newx, newy)) {
+          return true
         }
       }
 
@@ -53,7 +53,7 @@ var exist = function(board, word) {
   n = board[0].length
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
-      return searchWord(board, word, 0, i, j)
+      if (searchWord(board, word, 0, i, j)) return true
     }
   }
 
