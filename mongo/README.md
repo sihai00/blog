@@ -12,7 +12,7 @@
 环境安装与本篇文章的关系不大，但提供几个渠道：
 1. 跟着 `mongo` 官方文档来安装，本地启动调试；
 2. `mongo` 客户端，[Robo 3T](https://robomongo.org/)很好用哦；
-3. `mongo` 官方的[命令行小窗口](https://docs.mongodb.com/manual/tutorial/insert-documents/)（***免安装直接使用，学习推荐！！！***）。
+3. `mongo` 官方的[命令行小窗口](https://docs.mongodb.com/manual/tutorial/insert-documents/)（***免安装直接使用，学习推荐***）。
 
 ## 3.介绍
 在城市中有几所学校（`db`），我们来查看下城市中的学校都有哪些
@@ -24,34 +24,48 @@
 ## 4.插入
 学校（`test`）到了期末考试，成绩如下：
 
-| 姓名 | 性别 | 语文 | 数学 | 英语 |
-|:---:|:---:|:---:|:---:|:---:|
-| 小一 | 男生 | 90 | 90 | 90 |
-| 小二 | 女生 | 80 | 80 | 80 |
-| 小三 | 男生 | 70 | 70 | 70 |
+| 姓名 | 性别 | 语文 | 数学 | 英语 | 参加考试时间 |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 小一 | 男生 | 90 | 90 | 90 | 2019年6月10号 |
+| 小二 | 女生 | 80 | 80 | 80 | 2019年6月10号 |
+| 小三 | 女生 | 70 | 70 | 70 | 2019年6月10号 |
+| 小四 | 女生 | 60 | 60 | 60 | 2019年6月12号 |
 
 成绩出来后老师把分数录入成绩系统。
 ```javascript
 // 插入的方法：insertOne插入一条数据
-db.student.insertOne({ name: "小一", sex: '男生', chinese: '90', math: '90', english: '90', createdAt: new Date('2019-06-10')})
+db.student.insertOne({ 
+  name: "小一", 
+  sex: '男生', 
+  chinese: '90', 
+  math: '90', 
+  english: '90', 
+  createdAt: new Date('2016-06-09T16:00:00Z')
+})
 ```
 ![4-1](./4-1.jpg)
+
+> 注意：`new Date('2016-06-09T16:00:00Z')`是世界标准时间，`mongo`记录的也是世界标准时间。中国在东八区，时间加8小时，换算过来刚好是2019年6月10号。
 
 老师觉得一个个添加太烦了，所以一次性添加：
 ```javascript
 // // 插入的方法：insertMany 插入一条数据
 db.student.insertMany([
-  { name: "小三", sex: '女生', chinese: '80', math: '80', english: '80', createdAt: new Date('2019-06-10')},
-  { name: "小三", sex: '女生', chinese: '70', math: '70', english: '70', createdAt: new Date('2019-06-10')}
+  { name: "小二", sex: '女生', chinese: '80', math: '80', english: '80', createdAt: new Date('2016-06-09T16:00:00Z')},
+  { name: "小三", sex: '女生', chinese: '70', math: '70', english: '70', createdAt: new Date('2016-06-09T16:00:00Z')},
+  { name: "小四", sex: '女生', chinese: '60', math: '60', english: '60', createdAt: new Date('2016-06-11T16:00:00Z')}
 ])
 ```
 ![4-2](./4-2.jpg)
+
+> 1. 学校（`db`）：数据库，`mongo`可以容纳多个数据库，默认使用`test`；
+> 2. 学生集合（`student`）：集合，可以理解为集合所有学生的班级；
+> 3. 学生信息（`data`）：文档，可以理解为单个学生信息。
 
 ## 5.修改
 老师突然发现，小三其实是女装大佬，老师被骗恼羞成怒，于是修改其性别。
 ```javascript
 // 更新方法：updateOne
-
 db.student.updateOne(
   { name: '小三' },
   { $set: { sex: '女装大佬' }}
@@ -75,18 +89,16 @@ db.student.updateOne(
 ```javascript
 // 查询方法：find
 // pretty方法可以让数据更好看
-db.student.find({name: '小一'})
+db.student.find({name: '小一'}).pretty()
 ```
 ![6-1](./6-1.jpg)
 
-然后再查小二和小三的成绩。
+然后再查小二和小三的成绩。他突然发现小三是女装大佬的事实，震惊！
 ```javascript
 // 查询方法：find
-db.student.find({$or: [{name: '小二'}, {name: '小三'}]})
+db.student.find({$or: [{name: '小二'}, {name: '小三'}]}).pretty()
 ```
 ![6-2](./6-2.jpg)
-
-他突然发现小三是女装大佬的事实，震惊！
 
 > 其中 `$or` 是查询操作符，告诉 `mongo` 需要对符合的数据进行什么操作。用法差不多，列举部分如下（更多[查询操作符](https://docs.mongodb.com/manual/reference/operator/query/)）：
 > 1. [$eq](https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq)：匹配等于指定值的值。
@@ -111,11 +123,11 @@ db.student.deleteOne({name: '小三'})
 ```javascript
 // 遍历方法：forEach
 db.student.find().forEach(function(doc) {
-  doc.chinese = String(doc.chinese);
-  doc.math = String(doc.math);
-  doc.english = String(doc.english);
+  doc.chinese = NumberInt(doc.chinese);
+  doc.math = NumberInt(doc.math);
+  doc.english = NumberInt(doc.english);
   db.student.save(doc);
-});
+})
 ```
 
 ![8-1](./8-1.jpg)
@@ -141,7 +153,7 @@ db.student.aggregate([
       avgEnglish: { $avg: '$english' },
     }
   }
-])
+]).pretty()
 ```
 
 ![9-1](./9-1.jpg)
@@ -159,14 +171,14 @@ db.student.aggregate([
 > 9. [$month](https://docs.mongodb.com/v2.6/reference/operator/aggregation/month/#exp._S_month)：以1（1月）到12（12月）之间的数字返回日期的月份；
 > 10. [$dayOfMonth](https://docs.mongodb.com/v2.6/reference/operator/aggregation/dayOfMonth/#exp._S_dayOfMonth)：以1到31之间的数字返回日期的月中某天。
 
-老师发现上面的计算方式是计算所有的学生的成绩，而这次只需要计算这次期末考试成绩，修改如下：
+老师发现上面的计算方式是计算所有的学生的成绩，而这次只需要计算2019年6月10号考试成绩，修改如下：
 ```javascript
 db.student.aggregate([
   {
     $match: {
       createdAt: {
-        $gte: new Date('2019-06-09T16:00:00+00:00'),
-        $lte: new Date('2019-06-10T16:00:00+00:00')
+        $gte: new Date('2016-06-09T16:00:00Z'),
+        $lte: new Date('2016-06-10T16:00:00Z')
       }
     },
   },
@@ -195,7 +207,7 @@ db.student.aggregate([
       avgEnglish: { $avg: '$english' },
     }
   }
-])
+]).pretty()
 ```
 
 ![9-2](./9-2.jpg)
@@ -236,10 +248,10 @@ db.student.mapReduce(
     return reducedVal;
   }, 
   {
-    query: {createdAt: {$gt: new Date('2019-06-09T16:00:00+00:00'), $lt: new Date('2019-06-10T16:00:00+00:00')}}, 
+    query: {createdAt: {$gte: new Date('2016-06-09T16:00:00Z'), $lte: new Date('2016-06-10T16:00:00Z')}}, 
     out: 'sum'
   }
-).find();
+).find().pretty()
 ```
 ![9-3](./9-3.jpg)
 上面 `mongo` 语句的意思是：
