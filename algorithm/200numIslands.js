@@ -20,5 +20,37 @@
  * @return {number}
  */
 var numIslands = function(grid) {
-  
+  var d = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+  var m, n
+  var visited = Array(grid.length).fill(1).map(v => [])
+  var res = 0
+
+  function inArea(x, y) {
+    return x >= 0 && x < m && y >= 0 && y < n
+  }
+
+  function dfs(grid, x, y) {
+    visited[x][y] = true
+
+    for (var i = 0; i < d.length; i++) {
+      var newx = x + d[i][0]
+      var newy = y + d[i][1]
+
+      if (inArea(newx, newy) && !visited[newx][newy] && grid[newx][newy] === '1') {
+        dfs(grid, newx, newy)
+      }
+    }
+  }
+
+  m = board.length
+  n = board[0].length
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      if (grid[i][j] === 1 && !visited[i][j])
+      res += 1
+      dfs(grid, i, j)
+    }
+  }
+
+  return res
 };
