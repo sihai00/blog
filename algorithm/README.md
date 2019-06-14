@@ -168,6 +168,7 @@
 | 回溯 | 排列问题 | 46、47 |
 | 回溯 | 组合问题 | 77、39、40、216、78、90、401 |
 | 回溯 | floodfilll | 200 |
+| 回溯 | 回溯法 | 51 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -177,6 +178,7 @@
 | 40 | [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | medium | [javascript](40combinationSum2.js)
 | 46 | [Permutations](https://leetcode.com/problems/permutations/) | medium | [javascript](46permute.js)
 | 47 | [Permutations II](https://leetcode.com/problems/permutations-ii/) | medium | [javascript](47permuteUnique.js)
+| 51 | [N-Queens](https://leetcode.com/problems/n-queens/) | medium | [javascript](51solveNQueens.js)
 | 77 | [Combinations](https://leetcode.com/problems/combinations/) | medium | [javascript](77combine.js)
 | 78 | [Subsets](https://leetcode.com/problems/subsets/) | medium | [javascript](78subsets.js)
 | 79 | [Word Search](https://leetcode.com/problems/word-search/) | medium | [javascript](79exist.js)
