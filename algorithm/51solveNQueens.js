@@ -25,11 +25,11 @@ var solveNQueens = function(n) {
   var dia2 = []
 
   function generateBoard(n, row) {
-    var board = Array(n).fill(1).map(v => ['....'])
+    var board = Array(n).fill(1).map(v => Array(n).fill('.'))
     for (var i = 0; i < n; i++) {
       board[i][row[i]] = 'Q'
     }
-    return board
+    return board.map(v => v.join(''))
   }
   function pushQueen(n, index, row) {
     if (index === n) {
