@@ -188,3 +188,18 @@
 | 200 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | medium | [javascript](200numIslands.js)
 | 216 | [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) | medium | [javascript](216combinationSum3.js)
 | 401 | [Binary Watch](https://leetcode.com/problems/binary-watch/) | easy | [javascript](401readBinaryWatch.js)
+
+## 七：动态规划
+在递归问题中，解决重叠子问题：
+1. 记忆化搜索：自顶向下的解决问题
+2. 动态规划：自底向上的解决问题
+
+### 方法
+| 方法 | 说明 | 题目 |
+|:---:|:---:|:---:|
+| 递归 | 记忆化搜索 | [斐波那契数列](./fibonacci.js) |
+
+### 题目
+| 序号 | 题目 | 难度 | 解题
+|:---:|:---:|:---:|:---:|
+| 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
