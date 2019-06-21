@@ -206,3 +206,4 @@
 |:---:|:---:|:---:|:---:|
 | 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
 | 70 | Climbing Stairs | easy | [javascript](./70climbStairs.js)
+| 120 | Triangle | medium | [javascript](./120minimumTotal.js)
