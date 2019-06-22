@@ -16,14 +16,16 @@ var minimumTotal = function(triangle) {
   var len = triangle.length
 
   for (var i = 1; i < len; i++) {
+    // 第一个
     triangle[i][0] += triangle[i - 1][0]
+    // 最后一个
     triangle[i][i] += triangle[i - 1][i - 1]
 
     for (var j = 1; j < i; j++) {
       triangle[i][j] += Math.min(triangle[i - 1][j - 1], triangle[i - 1][j])
     }
   }
-  
+
   return Math.min.apply(null, triangle[len - 1])
 };
 
@@ -35,7 +37,9 @@ var minimumTotal = function(triangle) {
   function go(triangle, i, j) {
     if (res[i][j]) return res[i][j]
     if (i === 0) return res[i][j] = triangle[i][j]
+    // 第一个
     if (j === 0) return res[i][j] = triangle[i][j] + go(triangle, i - 1, 0)
+    // 最后一个
     if (i === j) return res[i][j] = triangle[i][j] + go(triangle, i - 1, i - 1)
     return res[i][j] = triangle[i][j] + Math.min(go(triangle, i - 1, j), go(triangle, i - 1, j - 1))
   }
