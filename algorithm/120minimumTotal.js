@@ -12,6 +12,8 @@
  * @param {number[][]} triangle
  * @return {number}
  */
+
+// 自上而下（动态规划）
 var minimumTotal = function(triangle) {
   var len = triangle.length
 
@@ -29,7 +31,17 @@ var minimumTotal = function(triangle) {
   return Math.min.apply(null, triangle[len - 1])
 };
 
-// 自下往上
+// 自下往上（动态规划）
+var minimumTotal = function(triangle) {
+  for (let i = triangle.length - 1; i > 0; i --) {
+    for (let j = 0; j <= i - 1; j++) {
+      triangle[i - 1][j] += Math.min(triangle[i][j], triangle[i][j + 1]);
+    }
+  }
+  return triangle[0][0];
+};
+
+// 自下往上（递归）
 var minimumTotal = function(triangle) {
   var len = triangle.length
   var res = Array(len).fill(1).map(v => [])
@@ -50,3 +62,4 @@ var minimumTotal = function(triangle) {
 
   return Math.min.apply(null, res[len - 1])
 };
+

@@ -199,11 +199,13 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 递归 | 记忆化搜索 | [斐波那契数列](./fibonacci.js)、70、120、64 |
+| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
+| 64 | Minimum Path Sum | medium | [javascript](./64minPathSum.js)
 | 70 | Climbing Stairs | easy | [javascript](./70climbStairs.js)
 | 120 | Triangle | medium | [javascript](./120minimumTotal.js)
+| 343 | Integer Break | medium | [javascript](./343integerBreak.js)
