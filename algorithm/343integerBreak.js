@@ -40,7 +40,7 @@ var integerBreak = function(n) {
     for (var j = 1; j <= i - 1; j++) {
       memo[i] = Math.max.apply(null, [memo[i], j * (i - j), j * memo[i - j]])
     }
-  } 
+  }
 
   return memo[n]
 };

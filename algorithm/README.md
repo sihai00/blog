@@ -199,13 +199,14 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343 |
+| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
-| 64 | Minimum Path Sum | medium | [javascript](./64minPathSum.js)
-| 70 | Climbing Stairs | easy | [javascript](./70climbStairs.js)
-| 120 | Triangle | medium | [javascript](./120minimumTotal.js)
-| 343 | Integer Break | medium | [javascript](./343integerBreak.js)
+| 64 | [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) | medium | [javascript](./64minPathSum.js)
+| 70 | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | easy | [javascript](./70climbStairs.js)
+| 120 | [Triangle](https://leetcode.com/problems/triangle) | medium | [javascript](./120minimumTotal.js)
+| 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
+| 343 | [Integer Break](https://leetcode.com/problems/integer-break/) | medium | [javascript](./343integerBreak.js)
