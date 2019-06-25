@@ -207,6 +207,7 @@
 | 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
 | 64 | [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) | medium | [javascript](./64minPathSum.js)
 | 70 | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | easy | [javascript](./70climbStairs.js)
+| 91 | [Decode Ways](https://leetcode.com/problems/decode-ways/) | medium | [javascript](./91numDecodings.js)
 | 120 | [Triangle](https://leetcode.com/problems/triangle) | medium | [javascript](./120minimumTotal.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 343 | [Integer Break](https://leetcode.com/problems/integer-break/) | medium | [javascript](./343integerBreak.js)

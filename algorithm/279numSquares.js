@@ -37,3 +37,36 @@ var numSquares = function(n) {
     }
   }
 };
+
+// 递归，从上往下
+var numSquares = function(n) {
+  var memo = []
+
+  function dfs(n){
+    if (n === 0) return 0
+    if (memo[n]) return memo[n]
+
+    var res = Number.MAX_SAFE_INTEGER
+    for (var i = 1; n - i * i >= 0; i++) {
+      res = Math.min(res, 1 + dfs(n - i * i))
+    }
+
+    return memo[n] = res
+  }
+
+  return dfs(n)
+}
+
+// 动态规划
+var numSquares  = function(n) {
+  var memo = Array(n + 1).fill(Number.MAX_SAFE_INTEGER)
+  memo[0] = 0
+
+  for (var i = 1; i <= n; i++) {
+    for (var j = 1; i - j * j >= 0; j++) {
+      memo[i] = Math.min(memo[i], 1 + memo[i - j * j])
+    }
+  }
+
+  return memo[n]
+}
