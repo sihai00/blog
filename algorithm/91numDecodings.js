@@ -37,3 +37,21 @@ var numDecodings = function(s) {
 
   return dfs(s)
 };
+
+// 理解：https://github.com/azl397985856/leetcode/blob/master/problems/91.decode-ways.md
+var numDecodings = function(s) {
+  var res = [1]
+  res[1] = s[0] === '0' ? 0 : 1
+
+  for (var i = 2; i <= s.length; i++) {
+    var one = Number(s[i - 1])
+    var two = Number(s.substring(i - 2, i))
+
+    res[i] = 0
+
+    if (one > 0)  res[i] += res[i - 1]
+    if (two > 9 && two < 27)  res[i] += res[i - 2]
+  }
+
+  return res[s.length]
+};
