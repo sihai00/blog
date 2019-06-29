@@ -205,6 +205,8 @@
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 0 | 记忆化搜索 | easy | [javascript](./fibonacci.js)
+| 62 | [Unique Paths](https://leetcode.com/problems/unique-paths/) | medium | [javascript](./62uniquePaths.js)
+| 63 | [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/) | medium | [javascript](./63uniquePathsWithObstacles.js)
 | 64 | [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) | medium | [javascript](./64minPathSum.js)
 | 70 | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | easy | [javascript](./70climbStairs.js)
 | 91 | [Decode Ways](https://leetcode.com/problems/decode-ways/) | medium | [javascript](./91numDecodings.js)

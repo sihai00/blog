@@ -44,7 +44,7 @@ var minPathSum = function(grid) {
         bottom = grid[i - 1][j]
       }
 
-      if (j === 0 ) {
+      if (j === 0) {
         right = maxInt
       } else {
         right = grid[i][j - 1]
