@@ -16,5 +16,21 @@
  * @return {number}
  */
 var rob = function(nums) {
-  
+  var n = nums.length
+
+  if (n === 0) return 0
+  if (n === 1) return nums[0]
+  if (n === 2) return Math.max(nums[0], nums[1])
+
+  function tryRob(nums, start, end){
+    var dp = [0, 0, 0]
+
+    for (var i = start + 2; i <= end + 2; i++) {
+      dp[i] = Math.max(nums[i - 2] + dp[i - 2], dp[i - 1])
+    }
+
+    return dp[end + 2]
+  }
+
+  return Math.max(tryRob(nums, 0, n - 2), tryRob(nums, 1, n - 1))
 };
