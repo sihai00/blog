@@ -199,7 +199,7 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63 |
+| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63、198、213、337、309 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -210,6 +210,8 @@
 | 64 | [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) | medium | [javascript](./64minPathSum.js)
 | 70 | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | easy | [javascript](./70climbStairs.js)
 | 91 | [Decode Ways](https://leetcode.com/problems/decode-ways/) | medium | [javascript](./91numDecodings.js)
+| 198 | [House Robber](https://leetcode.com/problems/house-robber/) |  |easy [javascript](./198rob.js)
 | 120 | [Triangle](https://leetcode.com/problems/triangle) | medium | [javascript](./120minimumTotal.js)
+| 213 | [House Robber II](https://leetcode.com/problems/house-robber-ii/) | medium | [javascript](./213rob.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 343 | [Integer Break](https://leetcode.com/problems/integer-break/) | medium | [javascript](./343integerBreak.js)
