@@ -34,3 +34,17 @@ var rob = function(root) {
 
   return tryRob(root, true)
 };
+
+var rob = function(root) {
+
+  const calc = (root) => {
+    if (!root) return [0, 0]
+
+    const [l1, l2] = calc(root.left)
+    const [r1, r2] = calc(root.right)
+
+    return [root.val+l2+r2, Math.max(l1+r1, l2+r2, l2+r1, l1+r2)]
+  }
+
+  return Math.max(...calc(root))
+}
