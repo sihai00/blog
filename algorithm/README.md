@@ -200,6 +200,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63、198、213、337、309 |
+| 递归 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -214,5 +215,6 @@
 | 120 | [Triangle](https://leetcode.com/problems/triangle) | medium | [javascript](./120minimumTotal.js)
 | 213 | [House Robber II](https://leetcode.com/problems/house-robber-ii/) | medium | [javascript](./213rob.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
+| 309 | [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | medium | [javascript](309maxProfit.js)
 | 337 | [House Robber III](https://leetcode.com/problems/house-robber-iii/) | medium | [javascript](337rob.js)
 | 343 | [Integer Break](https://leetcode.com/problems/integer-break/) | medium | [javascript](./343integerBreak.js)
