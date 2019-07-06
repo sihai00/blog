@@ -90,3 +90,27 @@ var knapsack01 = function (w, v, C) {
 
   return memo[(n - 1)%2][C]
 }
+
+// 动态规划
+// 优化：大于i的项是当前物品的最大价值，小于i的项是前一个物品的最大价值
+var knapsack01 = function (w, v, C) {
+  var n = w.length
+  if (n === 0) return 0
+
+  var memo = Array(C + 1).fill(-1)
+
+  // 初始化第一个物品的情况
+  for (var j = 0; j <= C; j++) {
+    memo[j] = j >= w[0] ? v[0] : 0
+  }
+  // i：物品
+  for (var i = 1; i < n; i++) {
+    // j：重量
+    for (var j = C; j >= w[i]; j--) {
+      // 考虑当前物品的情况（背包要大于物品的重量才能放入背包）
+      memo[j] = Math.max(memo[j], v[i] + memo[j - w[i]])
+    }
+  }
+
+  return memo[C]
+}
