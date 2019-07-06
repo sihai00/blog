@@ -61,3 +61,32 @@ var knapsack01 = function (w, v, C) {
 
   return memo[n - 1][C]
 }
+
+// 动态规划
+// 优化：因为第i行元素只依赖于第i-1行元素，理论上只保持两行元素。空间复杂度：o(C)。
+var knapsack01 = function (w, v, C) {
+  var n = w.length
+  if (n === 0) return 0
+
+  var memo = Array(2).fill(Array(C + 1).fill(-1))
+
+  // 初始化第一个物品的情况
+  for (var j = 0; j <= C; j++) {
+    memo[0][j] = j >= w[0] ? v[0] : 0
+  }
+  // i：物品
+  for (var i = 1; i < n; i++) {
+    // j：重量
+    for (var j = 0; j <= C; j++) {
+      // 不考虑当前物品的情况
+      memo[i%2][j] = memo[(i - 1)%2][j]
+
+      // 考虑当前物品的情况（背包要大于物品的重量才能放入背包）
+      if (j >= w[i]) {
+        memo[i%2][j] = Math.max(memo[(i - 1)%2][j], v[i] + memo[(i - 1)%2][j - w[i]])
+      }
+    }
+  }
+
+  return memo[(n - 1)%2][C]
+}
