@@ -200,7 +200,7 @@
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
 | 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63、198、213、337、309 |
-| 递归 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) |
+| 递归 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) 、416|
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -218,3 +218,4 @@
 | 309 | [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | medium | [javascript](309maxProfit.js)
 | 337 | [House Robber III](https://leetcode.com/problems/house-robber-iii/) | medium | [javascript](337rob.js)
 | 343 | [Integer Break](https://leetcode.com/problems/integer-break/) | medium | [javascript](./343integerBreak.js)
+| 416 | [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/) | medium | [javascript](./416canPartition.js)
