@@ -39,7 +39,7 @@ var canPartition = function(nums) {
     sum += nums[i]
   }
   if (sum % 2 !== 0) return false
-  
+
   var n = nums.length
   var C = parseInt(sum / 2) + 1
   var memo = Array(C + 1).fill(-1)
