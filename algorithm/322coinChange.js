@@ -14,5 +14,21 @@
  * @return {number}
  */
 var coinChange = function(coins, amount) {
+  var max = amount + 1
+  var memo = Array(amount + 1).fill(-1)
 
+  function search(coins, amount){
+    if (amount === 0) return 0
+    if (memo[amount] !== -1) return memo[amount]
+
+    var res = max
+    for (var i = 0; i < coins.length; i++) {
+      if (amount - coins[i] >= 0) res = Math.min(res, 1 + search(coins, amount - coins[i]))
+    }
+
+    return memo[amount] = res
+  }
+
+  var res = search(coins, amount)
+  return res === max ? -1 : res
 };
