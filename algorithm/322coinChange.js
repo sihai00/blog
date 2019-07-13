@@ -32,3 +32,16 @@ var coinChange = function(coins, amount) {
   var res = search(coins, amount)
   return res === max ? -1 : res
 };
+
+var coinChange = function(coins, amount) {
+  var dp = Array(amount + 1).fill(amount + 1)
+  dp[0] = 0
+
+  for (var i = 0; i < coins.length; i++) {
+    for (var j = coins[i]; j <= amount; j++) {
+      dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1)
+    }
+  }
+  
+  return dp[amount] === amount + 1 ? -1 : dp[amount]
+}
