@@ -42,6 +42,6 @@ var coinChange = function(coins, amount) {
       dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1)
     }
   }
-  
+
   return dp[amount] === amount + 1 ? -1 : dp[amount]
 }
