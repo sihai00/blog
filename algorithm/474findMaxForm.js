@@ -16,12 +16,13 @@
  * @return {number}
  */
 var findMaxForm = function(strs, m, n) {
-  var dp = Array(n + 1).fill(Array(m + 1).fill(0))
+  var dp = Array(n + 1).fill(0).map(() => Array(m + 1).fill(0))
 
   for (var i = 0; i < strs.length; i++) {
     var zero = 0
     var one = 0
 
+    // 当前项有多少个0和1
     for (var j = 0; j < strs[i].length; j++) {
       if (strs[i][j] === '0') {
         zero += 1
@@ -30,8 +31,10 @@ var findMaxForm = function(strs, m, n) {
       }
     }
 
+    // 比较所有情况
     for (let j = n; j >= one; j--) {
       for (let k = m; k >= zero; k--) {
+        // 取当前项或者不取当前项哪个更大
         dp[j][k] = Math.max(dp[j - one][k-zero]+ 1, dp[j][k])
       }
     }
