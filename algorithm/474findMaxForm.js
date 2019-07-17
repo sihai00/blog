@@ -16,5 +16,26 @@
  * @return {number}
  */
 var findMaxForm = function(strs, m, n) {
+  var dp = Array(n + 1).fill(Array(m + 1).fill(0))
 
+  for (var i = 0; i < strs.length; i++) {
+    var zero = 0
+    var one = 0
+
+    for (var j = 0; j < strs[i].length; j++) {
+      if (strs[i][j] === '0') {
+        zero += 1
+      } else {
+        one += 1
+      }
+    }
+
+    for (let j = n; j >= one; j--) {
+      for (let k = m; k >= zero; k--) {
+        dp[j][k] = Math.max(dp[j - one][k-zero]+ 1, dp[j][k])
+      }
+    }
+  }
+
+  return dp[n][m]
 };
