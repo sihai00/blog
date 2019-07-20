@@ -213,6 +213,7 @@
 | 91 | [Decode Ways](https://leetcode.com/problems/decode-ways/) | medium | [javascript](./91numDecodings.js)
 | 198 | [House Robber](https://leetcode.com/problems/house-robber/) |  |easy [javascript](./198rob.js)
 | 120 | [Triangle](https://leetcode.com/problems/triangle) | medium | [javascript](./120minimumTotal.js)
+| 139 | [Word Break](https://leetcode.com/problems/word-break/) | medium | [javascript](./139wordBreak.js)
 | 213 | [House Robber II](https://leetcode.com/problems/house-robber-ii/) | medium | [javascript](./213rob.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
 | 309 | [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | medium | [javascript](309maxProfit.js)
