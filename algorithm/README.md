@@ -223,3 +223,4 @@
 | 377 | [Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/) | medium | [javascript](./377combinationSum4.js)
 | 416 | [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/) | medium | [javascript](./416canPartition.js)
 | 474 | [Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes/) | medium | [javascript](./474findMaxForm.js)
+| 494 | [Target Sum](https://leetcode.com/problems/target-sum/) | medium | [javascript](./494findTargetSumWays.js)
