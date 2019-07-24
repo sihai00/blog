@@ -41,7 +41,7 @@ var findTargetSumWays = function(nums, S) {
       }
     } else {
       if (memo[i][sum + 1000]) return memo[i][sum + 1000]
-      
+
       var add = calculate(nums, i + 1, sum + nums[i], S)
       var subtract = calculate(nums, i + 1, sum - nums[i], S)
       return memo[i][sum + 1000] = add + subtract

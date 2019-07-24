@@ -199,8 +199,10 @@
 ### 方法
 | 方法 | 说明 | 题目 |
 |:---:|:---:|:---:|
-| 递归 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63、198、213、337、309 |
-| 递归 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) 、416、322、377、474、139、494|
+| 递归、循环 | 记忆化搜索、动态规划 | [斐波那契数列](./fibonacci.js)、70、120、64、343、279、91、62、63、198、213、337、309 |
+| 递归、循环 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) 、416、322、377、474、139、494|
+| 递归、循环 | 记忆化搜索、动态规划 | [0-1背包问题](./knapsack01.js) 、416、322、377、474、139、494|
+| 递归、循环 | LIS序列问题 | 300、376 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
@@ -216,6 +218,7 @@
 | 139 | [Word Break](https://leetcode.com/problems/word-break/) | medium | [javascript](./139wordBreak.js)
 | 213 | [House Robber II](https://leetcode.com/problems/house-robber-ii/) | medium | [javascript](./213rob.js)
 | 279 | [Perfect Squares](https://leetcode.com/problems/perfect-squares/) | medium | [javascript](279numSquares.js)
+| 300 | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | medium | [javascript](300lengthOfLIS.js)
 | 309 | [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | medium | [javascript](309maxProfit.js)
 | 322 | [Coin Change](https://leetcode.com/problems/coin-change/) | medium | [javascript](322coinChange.js)
 | 337 | [House Robber III](https://leetcode.com/problems/house-robber-iii/) | medium | [javascript](337rob.js)
