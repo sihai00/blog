@@ -228,3 +228,17 @@
 | 416 | [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/) | medium | [javascript](./416canPartition.js)
 | 474 | [Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes/) | medium | [javascript](./474findMaxForm.js)
 | 494 | [Target Sum](https://leetcode.com/problems/target-sum/) | medium | [javascript](./494findTargetSumWays.js)
+
+## 八：贪心算法
+
+### 方法
+| 方法 | 说明 | 题目 |
+|:---:|:---:|:---:|
+| 贪心算法 | 贪心算法 | 455、392、435 |
+
+### 题目
+| 序号 | 题目 | 难度 | 解题
+|:---:|:---:|:---:|:---:|
+| 392 | 判断子序列 | medium | [javascript](./392isSubsequence.js)
+| 435 | 无重叠区间 | medium | [javascript](./435eraseOverlapIntervals.js)
+| 455 | 分发饼干 | easy | [javascript](./455findContentChildren.js)
