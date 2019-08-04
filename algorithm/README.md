@@ -37,11 +37,13 @@
 | set | 使用set数据结构 | 349、217 |
 | 哈希表map | 使用map数据结构 | 349、350、242、202、290、205、451、1、454、49、447 |
 | 滑动窗口 + 查找表 | 结合滑动窗口和set数据结构 | 219、220 |
+| 二分法 | 二分查找就是将查找的键和子数组的中间键作比较，如果被查找的键小于中间键，就在左子数组继续查找；如果大于中间键，就在右子数组中查找，否则中间键就是要找的元素 | 4 |
 
 ### 题目
 | 序号 | 题目 | 难度 | 解题
 |:---:|:---:|:---:|:---:|
 | 1 | [Two Sum](https://leetcode.com/problems/two-sum/) | easy | [javascript](1twoSum.js)
+| 4 | [寻找两个有序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/) | hard | [javascript](4findMedianSortedArrays.js)
 | 49 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/) | medium | [javascript](49groupAnagrams.js)
 | 202 | [Happy Number](https://leetcode.com/problems/happy-number/) | easy | [javascript](202isHappy.js)
 | 205 | [Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | easy | [javascript](205isIsomorphic.js)
