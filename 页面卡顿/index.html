@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  .a{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    background-color: green;
+  }
+</style>
+<body>
+  <div class="a"></div>
+</body>
+<script>
+var a = document.querySelector('.a')
+function animation(i) {
+  if (i === 300) return
+  a.style.left = i + 'px'
+  setTimeout(function test(){
+    animation(i + 1)
+  }, 0)
+}
+function selectSort(arr){
+  for (var i = 0; i < arr.length; i++) {
+    for (var j = i + 1; j < arr.length; j++) {
+      if (arr[i] > arr[j]) {
+        var temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+      }
+    }
+  }
+  return arr
+}
+function quickSort(arr) {
+  if (arr.length <= 1) return arr
+
+  var pivot = Math.floor(arr.length / 2)
+  var left = []
+  var right = []
+  var mid = []
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] < arr[pivot]) {
+      left.push(arr[i])
+    }else if(arr[i] > arr[pivot]){
+      right.push(arr[i])
+    }else if(arr[i] === arr[pivot]){
+      mid.push(arr[i])
+    }
+  }
+
+  return quickSort(left).concat(mid, quickSort(right))
+}
+function random(min, max) {
+  return Math.floor((max - min + 1) * Math.random()) + min
+}
+function createArr(num, min, max) {
+   return Array(num).fill(1).map(v => random(min, max))
+}
+function combine(left, right) {
+  var res = []
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      res.push(left.shift())
+    } else {
+      res.push(right.shift())
+    }
+  }
+
+  return res.concat(left.length ? left : right)
+}
+function split(arr, rate) {
+  var len = arr.length
+  var res = []
+
+  for (var i = 0; i < len; i++) {
+    var level = Math.floor(arr[i] / rate)
+    res[level] = res[level] || []
+    res[level].push(arr[i])
+  }
+
+  return res
+}
+function useSelectSort() {
+  var arr = createArr(50000, 10, 10000)
+  var res = selectSort(arr)
+}
+function useQuickSort() {
+  var arr = createArr(200000, 10, 10000)
+  var res = quickSort(arr)
+  console.log(res)
+}
+function useWorker(){
+  var worker = new Worker('./worker.js')
+  worker.postMessage({cmd: 'start'})
+  worker.onmessage = function (event) {
+    console.log('sort result' + event.data);
+  }
+}
+function useFragmentation() {
+  var arr = createArr(200000, 10, 10000)
+  // var splitArr = split(arr, 1000).map(v => selectSort(v))
+  // var sum = splitArr.reduce((a, b) => a.concat(b), [])
+  var splitArr = split(arr, 100).map(v => () => selectSort(v))
+  var len = splitArr.length
+  var res = []
+  var i = 0
+
+  requestAnimationFrame(function loop() {
+    if (i !== len - 1) {
+      res[i] = splitArr[i]()
+      i += 1
+      requestAnimationFrame(loop)
+    } else {
+      var sum = res.reduce((a, b) => a.concat(b), [])
+      console.log(sum)
+    }
+  })
+}
+
+console.time('a')
+
+console.time('b')
+// useSelectSort()
+// useQuickSort()
+useWorker()
+// useFragmentation()
+console.timeEnd('b')
+
+animation(1)
+console.timeEnd('a')
+</script>
+</html>

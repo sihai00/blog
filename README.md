@@ -2,13 +2,12 @@
 博客
 
 ## 目录
-| 标题 | 地址 | 类型 | 功能 |
-|:---:|:---:|:---:|:---:|
-| [web-mobile-cli简易教程](https://github.com/sihai00/web-mobile-cli) | [链接](web-mobile-cli简易教程) | 工具 | 脚手架 |
-| [clipboard.js](https://github.com/zenorocha/clipboard.js) | [链接](analysis/clipboard/) | 源码 | 复制 |
-| [history](https://github.com/ReactTraining/history) | [链接](analysis/history/) | 源码 | 历史记录 |
-| [sal](https://github.com/mciastek/sal) | [链接](sal) | 工具 | 滚动动画库 |
-| [fallSnow](https://codepen.io/sihai00/pen/EGqpXp) | [链接](fallSnow) | 组件 | 下雪效果 |
-| leetcode算法题 | [链接](algorithm) | 算法 | 算法题 |
-| webpack构建多页应用 | [链接](webpack) | 工具 | 脚手架 |
-| mongo | [链接](mongo) | 数据库 | 数据库 |
+1. [web-mobile-cli简易教程](./web-mobile-cli简易教程)
+2. [clipboard.js源码解析-复制到剪切板插件](./analysis/clipboard)
+3. [history源码解析-管理会话历史记录](./analysis/history)
+4. [sal源码解析-轻量级的滚动动画库](./sal)
+5. [纯css模拟下雪效果](./fallSnow)
+6. [webpack构建多页应用](./webpack)
+7. [mongo聚合笔记](./mongo)
+8. [前端优化面试题-页面卡顿](./页面卡顿)
+
