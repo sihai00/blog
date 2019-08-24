@@ -9,5 +9,4 @@
 5. [纯css模拟下雪效果](./fallSnow)
 6. [webpack构建多页应用](./webpack)
 7. [mongo聚合笔记](./mongo)
-8. [前端优化面试题-页面卡顿](./页面卡顿)
 
