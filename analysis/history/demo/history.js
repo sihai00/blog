@@ -35,6 +35,7 @@
     let isListener = false
     function checkDOMListeners(){
       if (!isListener) {
+        console.log(1)
         isListener = true
         window.addEventListener('popstate', handlePop)
       }
@@ -44,6 +45,7 @@
     let forceNextPop = false
     // 监听历史条目改变
     function handlePop(event){
+      console.log(event, 'event')
       let location = getDOMLocation(event.state)
       if (forceNextPop) {
         forceNextPop = false
@@ -92,7 +94,7 @@
         allKeys.push(key)
         // 更新历史条目
         w.history.pushState({key}, null, href)
-        
+
         // 获取当前最新的location信息
         let location = getDOMLocation({key})
 
