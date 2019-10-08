@@ -5,7 +5,7 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var 75 = function(nums) {
+var sortColors = function(nums) {
   var index = 0
   var count = Array(3).fill(0)
 
