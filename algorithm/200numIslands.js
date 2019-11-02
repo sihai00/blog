@@ -42,10 +42,10 @@ var numIslands = function(grid) {
     }
   }
 
-  m = board.length
-  n = board[0].length
-  for (var i = 0; i < board.length; i++) {
-    for (var j = 0; j < board[i].length; j++) {
+  m = grid.length
+  n = grid[0].length
+  for (var i = 0; i < grid.length; i++) {
+    for (var j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === 1 && !visited[i][j])
       res += 1
       dfs(grid, i, j)
